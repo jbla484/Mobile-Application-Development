@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="17dp"
+            android:layout_marginRight="20dp"
+            android:clickable="true"
+            android:contentDescription="FAB"
+            android:focusable="true"
+            android:layout_gravity="bottom|end"
+            app:srcCompat="@android:drawable/ic_input_add" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:id="@+id/svContent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context=".DashboardActivity">
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="655dp">
+
+                    <TableRow
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginRight="30dp">
+
+                        <Button
+                            android:id="@+id/button_first"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="13dp"
+                            android:layout_weight="1"
+                            android:padding="35dp"
+                            android:text="Term 1" />
+
+                        <Button
+                            android:id="@+id/button_second"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="13dp"
+                            android:layout_weight="1"
+                            android:padding="35dp"
+                            android:text="Term 2" />
+                    </TableRow>
+
+                    <TableRow
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginRight="30dp">
+
+                        <Button
+                            android:id="@+id/button_third"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="13dp"
+                            android:layout_weight="1"
+                            android:padding="35dp"
+                            android:text="Term 3" />
+
+                        <Button
+                            android:id="@+id/button_fourth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="13dp"
+                            android:layout_weight="1"
+                            android:padding="35dp"
+                            android:text="Term 4" />
+                    </TableRow>
+
+                    <TableRow
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginRight="30dp">
+
+                        <Button
+                            android:id="@+id/button_fifth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="13dp"
+                            android:layout_weight="1"
+                            android:padding="35dp"
+                            android:text="Term 5" />
+
+                        <Button
+                            android:id="@+id/button_sixth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="13dp"
+                            android:layout_weight="1"
+                            android:padding="35dp"
+                            android:text="Term 6" />
+
+                    </TableRow>
+
+                    <TableRow
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginRight="30dp">
+
+                        <Button
+                            android:id="@+id/button_seventh"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="13dp"
+                            android:layout_weight="1"
+                            android:padding="35dp"
+                            android:text="Term 1" />
+
+                        <Button
+                            android:id="@+id/button_eighth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="13dp"
+                            android:layout_weight="1"
+                            android:padding="35dp"
+                            android:text="Term 2" />
+                    </TableRow>
+
+                    <TableRow
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginRight="30dp">
+
+                        <Button
+                            android:id="@+id/button_ninth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="13dp"
+                            android:layout_weight="1"
+                            android:padding="35dp"
+                            android:text="Term 1" />
+
+                        <Button
+                            android:id="@+id/button_tenth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="13dp"
+                            android:layout_weight="1"
+                            android:padding="35dp"
+                            android:text="Term 2" />
+                    </TableRow>
+                </TableLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.myapplication">
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+    <uses-permission android:name="android.permission.BROADCAST_CLOSE_SYSTEM_DIALOGS"
+        tools:ignore="ProtectedPermissions" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="James&apos; Student Progress App"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppDark">
+
+        <activity
+            android:name=".AddTermActivity"
+            android:exported="false"
+            android:label="Add Term"
+            android:parentActivityName=".DashboardActivity" />
+        <activity
+            android:name=".EditTermActivity"
+            android:exported="false"
+            android:label="Edit Term"
+            android:parentActivityName=".TermDetailsActivity" />
+        <activity
+            android:name=".AddCourseActivity"
+            android:exported="false"
+            android:label="Add Course"
+            android:parentActivityName=".TermDetailsActivity" />
+        <activity
+            android:name=".EditCourseActivity"
+            android:exported="false"
+            android:label="Edit Course"
+            android:parentActivityName=".CourseDetailsActivity" />
+        <activity
+            android:name=".AddAssessmentActivity"
+            android:exported="false"
+            android:label="Add Assessment"
+            android:parentActivityName=".CourseDetailsActivity" />
+        <activity
+            android:name=".EditAssessmentActivity"
+            android:exported="false"
+            android:label="Edit Assessment"
+            android:parentActivityName=".ViewAssessmentActivity" />
+        <activity
+            android:name=".ViewAssessmentActivity"
+            android:exported="false"
+            android:label="View Assessment"
+            android:parentActivityName=".CourseDetailsActivity" />
+        <activity
+            android:name=".TermDetailsActivity"
+            android:exported="false"
+            android:label="Term Details"
+            android:parentActivityName=".DashboardActivity" />
+        <activity
+            android:name=".CourseDetailsActivity"
+            android:exported="false"
+            android:label="Course Details"
+            android:parentActivityName=".TermDetailsActivity" />
+        <activity
+            android:name=".DashboardActivity"
+            android:exported="false"
+            android:label="Dashboard" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="Welcome">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:process=":remote" android:name=".Alarm" android:exported="true" >
+            <intent-filter>
+                <action android:name="example.START_ALARM" >
+                </action>
+            </intent-filter>
+        </receiver>
+
+
+        <service
+            android:name=".NotificationService"
+            android:label="@string/app_name"
+            android:exported="true"
+            android:process=":update_process">
+            <intent-filter>
+                <action android:name="your.app.domain.NotificationService" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+        <receiver
+            android:name=".Restarter"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="restartservice" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".ClosingBackGroundService" />
+    </application>
+</manifest>

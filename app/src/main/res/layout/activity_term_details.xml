@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout android:layout_width="fill_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_height="fill_parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="17dp"
+            android:layout_marginRight="20dp"
+            android:clickable="true"
+            android:contentDescription="FAB"
+            android:focusable="true"
+            android:layout_gravity="bottom|end"
+            app:srcCompat="@android:drawable/ic_input_add" />
+
+
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".TermDetailsActivity">
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="655dp"
+                    android:stretchColumns="*">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginRight="30dp">
+
+                        <TextView
+                            android:id="@+id/remainingWeeksValue"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="left"
+                            android:layout_weight="1"
+                            android:textSize="35dp"
+                            android:text="Weeks" />
+
+                        <TextView
+                            android:id="@+id/remainingView"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="left"
+                            android:layout_weight="4"
+                            android:textSize="20dp"
+                            android:gravity="left"
+                            android:text="Remaining \nWeeks" />
+
+                        <TextView
+                            android:id="@+id/termView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:gravity="left"
+                            android:textSize="15dp"
+                            android:layout_weight="2"
+                            android:text="Term Name \nand Date" />
+
+                    </TableRow>
+
+                    <TableRow
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginRight="30dp">
+
+                        <Button
+                            android:id="@+id/course_button_first"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="13dp"
+                            android:layout_weight="1"
+                            android:padding="35dp"
+                            android:text="Course 1" />
+
+                        <Button
+                            android:id="@+id/course_button_second"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="13dp"
+                            android:layout_weight="1"
+                            android:padding="35dp"
+                            android:text="Course 2" />
+                    </TableRow>
+
+                    <TableRow
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginRight="30dp">
+
+                        <Button
+                            android:id="@+id/course_button_third"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="13dp"
+                            android:layout_weight="1"
+                            android:padding="35dp"
+                            android:text="Course 3" />
+
+                        <Button
+                            android:id="@+id/course_button_fourth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="13dp"
+                            android:layout_weight="1"
+                            android:padding="35dp"
+                            android:text="Course 4" />
+                    </TableRow>
+
+                    <TableRow
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginRight="30dp">
+
+                        <Button
+                            android:id="@+id/course_button_fifth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="13dp"
+                            android:layout_weight="1"
+                            android:padding="35dp"
+                            android:text="Course 5" />
+
+                        <Button
+                            android:id="@+id/course_button_sixth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="13dp"
+                            android:layout_weight="1"
+                            android:padding="35dp"
+                            android:text="Course 6" />
+                    </TableRow>
+
+                </TableLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>

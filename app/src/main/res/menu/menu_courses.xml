@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/action_one_courses"
+        android:title="Edit Course"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_two_courses"
+        android:title="Delete Course"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_three_courses"
+        android:title="Share Course Notes"
+        app:showAsAction="never"/>
+
+</menu>

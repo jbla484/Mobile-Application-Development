@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        tools:context=".AddCourseActivity">
+
+
+        <TextView
+            android:id="@+id/assessmentTitleView"
+            android:layout_width="match_parent"
+            android:layout_height="23dp"
+            android:gravity="center"
+            android:text="Assessment Title:"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.303" />
+
+        <EditText
+            android:id="@+id/assessmentTitleText"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:inputType="textPersonName"
+            android:layout_marginRight="300px"
+            android:layout_marginLeft="300px"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/assessmentTitleView" />
+
+        <TextView
+            android:id="@+id/assessmentStartView"
+            android:layout_width="match_parent"
+            android:layout_height="23dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Start Date:"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/assessmentTitleText" />
+
+        <Button
+            android:id="@+id/datePickerButton"
+            style="?android:spinnerStyle"
+            android:layout_width="match_parent"
+            android:layout_marginRight="300px"
+            android:layout_marginLeft="300px"
+            android:layout_height="43dp"
+            android:layout_marginTop="4dp"
+            android:text="MAY 01 2022"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/assessmentStartView" />
+
+        <TextView
+            android:id="@+id/assessmentEndView"
+            android:layout_width="match_parent"
+            android:layout_height="23dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="End Date:"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/datePickerButton" />
+
+        <Button
+            android:id="@+id/datePickerButton2"
+            style="?android:spinnerStyle"
+            android:layout_width="match_parent"
+            android:layout_marginRight="300px"
+            android:layout_marginLeft="300px"
+            android:layout_height="43dp"
+            android:layout_marginTop="4dp"
+            android:text="MAY 01 2022"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/assessmentEndView" />
+
+        <TextView
+            android:id="@+id/assessmentTypeView"
+            android:layout_width="match_parent"
+            android:layout_height="23dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Type:"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/datePickerButton2" />
+
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="match_parent"
+            android:layout_marginRight="285px"
+            android:layout_marginLeft="295px"
+            android:layout_height="43dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/assessmentTypeView" />
+
+        <Button
+            android:id="@+id/editAssessmentButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="300px"
+            android:layout_marginLeft="300px"
+            android:layout_marginTop="28dp"
+            android:gravity="center"
+            android:text="Edit Assessment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
