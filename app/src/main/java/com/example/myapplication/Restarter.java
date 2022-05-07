@@ -12,9 +12,14 @@ public class Restarter extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Toast.makeText(context, "Restarted!", Toast.LENGTH_SHORT).show();
         Log.d("INFO", "onReceive: restarted");
-        if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED))
+        if ( intent.getAction().equals("android.intent.action.BOOT_COMPLETED") || intent.getAction().equals("android.intent.action.REBOOT") ||
+                intent.getAction().equals("android.intent.action.QUICKBOOT_POWERON")|| intent.getAction().equals("android.intent.action.ACTION_POWER_CONNECTED") ||
+                intent.getAction().equals("android.hardware.usb.action.USB_STATE") || intent.getAction().equals("android.intent.action.ACTION_POWER_DISCONNECTED") )
         {
+            Log.d("INFO", "onReceive: BOOT_COMPLETED");
+            Toast.makeText(context, "BOOT_COMPLETED!", Toast.LENGTH_SHORT).show();
             alarm.setAlarm(context);
         }
         Intent serviceIntent = new Intent(context, NotificationService.class);

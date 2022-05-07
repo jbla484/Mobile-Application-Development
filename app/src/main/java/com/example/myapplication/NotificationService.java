@@ -345,7 +345,8 @@ public class NotificationService extends Service {
             }
         };
         // Wait 4 hours to receive the notification.
-        timer.schedule(timerTask, 14400000, 43200000);
+        timer.schedule(timerTask, 1000, 1000);
+        //timer.schedule(timerTask, 14400000, 43200000);
     }
 
     private int getMonthIndex(String month) {
