@@ -12,6 +12,6 @@ public class ClosingBackGroundService extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.i(TAG,"service closed");
-        context.stopService(DashboardActivity.mServiceIntent);
+        context.stopService(MainActivity.mServiceIntent);
     }
 }

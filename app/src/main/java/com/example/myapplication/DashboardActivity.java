@@ -23,14 +23,9 @@ public class DashboardActivity extends AppCompatActivity {
     private static final String TAG = "DEBUG";
     public static int term_id;
 
-    public static Intent mServiceIntent;
-
     @Override
     protected void onDestroy() {
-        Intent broadcastIntent = new Intent();
-        broadcastIntent.setAction("restartservice");
-        broadcastIntent.setClass(this, Restarter.class);
-        this.sendBroadcast(broadcastIntent);
+
         super.onDestroy();
     }
 
@@ -38,12 +33,6 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
-        NotificationService mYourService = new NotificationService();
-        mServiceIntent = new Intent(this, mYourService.getClass());
-        if (!isMyServiceRunning(mYourService.getClass())) {
-            startService(mServiceIntent);
-        }
 
         Log.d(TAG, "onCreate: ");
 
@@ -320,18 +309,6 @@ public class DashboardActivity extends AppCompatActivity {
 
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(view -> startActivity(new Intent(DashboardActivity.this, AddTermActivity.class)));
-    }
-
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                Log.i (TAG, "Service Running");
-                return true;
-            }
-        }
-        Log.i (TAG, "Service Not running");
-        return false;
     }
 
     public void findRemainingWeeks(String termTitle, String startDate, String endDate, Intent intent, int term_id) {

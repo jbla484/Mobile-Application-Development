@@ -8,6 +8,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
+import androidx.core.graphics.drawable.IconCompat;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -48,6 +50,7 @@ public class NotificationService extends Service {
         channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
         notificationManager.createNotificationChannel(channel);
+
     }
 
     @Override
@@ -216,6 +219,7 @@ public class NotificationService extends Service {
                             .setCategory(Notification.CATEGORY_SERVICE)
                             .build();
                     notification.flags = 1337;
+                    //FIXME PROBLEM AREA
                     startForeground(2, notification);
                     Log.i(TAG, "Count =========  " + (counter++));
 
