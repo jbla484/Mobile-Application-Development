@@ -165,6 +165,56 @@
                             android:layout_weight="1"
                             android:padding="35dp" />
                     </TableRow>
+
+                    <TableRow
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginRight="30dp">
+
+                        <Button
+                            android:id="@+id/assessment_button_seventh"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="13dp"
+                            android:layout_weight="1"
+                            android:padding="35dp" />
+
+                        <Button
+                            android:id="@+id/assessment_button_eighth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="13dp"
+                            android:layout_weight="1"
+                            android:padding="35dp" />
+                    </TableRow>
+
+                    <TableRow
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginRight="30dp">
+
+                        <Button
+                            android:id="@+id/assessment_button_ninth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="13dp"
+                            android:layout_weight="1"
+                            android:padding="35dp" />
+
+                        <Button
+                            android:id="@+id/assessment_button_tenth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="13dp"
+                            android:layout_weight="1"
+                            android:padding="35dp" />
+                    </TableRow>
                 </TableLayout>
             </RelativeLayout>
         </ScrollView>

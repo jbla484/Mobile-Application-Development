@@ -72,6 +72,10 @@ public class TermDetailsActivity extends AppCompatActivity {
         Button btn3 = findViewById(R.id.course_button_fourth);
         Button btn4 = findViewById(R.id.course_button_fifth);
         Button btn5 = findViewById(R.id.course_button_sixth);
+        Button btn6 = findViewById(R.id.course_button_seventh);
+        Button btn7 = findViewById(R.id.course_button_eighth);
+        Button btn8 = findViewById(R.id.course_button_ninth);
+        Button btn9 = findViewById(R.id.course_button_tenth);
 
         btn0.setOnClickListener(view -> {
 
@@ -193,12 +197,96 @@ public class TermDetailsActivity extends AppCompatActivity {
             }
         });
 
+        btn6.setOnClickListener(view -> {
+
+            StudentDatabase sdb15 = new StudentDatabase(getApplicationContext());
+            Cursor c15 = sdb15.getCourseLength2();
+
+            Intent intent = new Intent(TermDetailsActivity.this, CourseDetailsActivity.class);
+
+            while (c15.moveToNext()) {
+                if (btn6.getText().toString().equals(c15.getString(c15.getColumnIndexOrThrow("title")))) {
+
+                    int term_id = Integer.parseInt(c15.getString(c15.getColumnIndexOrThrow("_id")));
+                    String termTitle = c15.getString(c15.getColumnIndexOrThrow("title"));
+                    String startDate = c15.getString(c15.getColumnIndexOrThrow("start_date"));
+                    String endDate = c15.getString(c15.getColumnIndexOrThrow("end_date"));
+                    String optionalNotes = c15.getString(c15.getColumnIndexOrThrow("optional_note"));
+                    findRemainingWeeks(termTitle, startDate, endDate, intent, term_id, optionalNotes);
+                }
+            }
+        });
+
+        btn7.setOnClickListener(view -> {
+
+            StudentDatabase sdb15 = new StudentDatabase(getApplicationContext());
+            Cursor c15 = sdb15.getCourseLength2();
+
+            Intent intent = new Intent(TermDetailsActivity.this, CourseDetailsActivity.class);
+
+            while (c15.moveToNext()) {
+                if (btn7.getText().toString().equals(c15.getString(c15.getColumnIndexOrThrow("title")))) {
+
+                    int term_id = Integer.parseInt(c15.getString(c15.getColumnIndexOrThrow("_id")));
+                    String termTitle = c15.getString(c15.getColumnIndexOrThrow("title"));
+                    String startDate = c15.getString(c15.getColumnIndexOrThrow("start_date"));
+                    String endDate = c15.getString(c15.getColumnIndexOrThrow("end_date"));
+                    String optionalNotes = c15.getString(c15.getColumnIndexOrThrow("optional_note"));
+                    findRemainingWeeks(termTitle, startDate, endDate, intent, term_id, optionalNotes);
+                }
+            }
+        });
+
+        btn8.setOnClickListener(view -> {
+
+            StudentDatabase sdb15 = new StudentDatabase(getApplicationContext());
+            Cursor c15 = sdb15.getCourseLength2();
+
+            Intent intent = new Intent(TermDetailsActivity.this, CourseDetailsActivity.class);
+
+            while (c15.moveToNext()) {
+                if (btn8.getText().toString().equals(c15.getString(c15.getColumnIndexOrThrow("title")))) {
+
+                    int term_id = Integer.parseInt(c15.getString(c15.getColumnIndexOrThrow("_id")));
+                    String termTitle = c15.getString(c15.getColumnIndexOrThrow("title"));
+                    String startDate = c15.getString(c15.getColumnIndexOrThrow("start_date"));
+                    String endDate = c15.getString(c15.getColumnIndexOrThrow("end_date"));
+                    String optionalNotes = c15.getString(c15.getColumnIndexOrThrow("optional_note"));
+                    findRemainingWeeks(termTitle, startDate, endDate, intent, term_id, optionalNotes);
+                }
+            }
+        });
+
+        btn9.setOnClickListener(view -> {
+
+            StudentDatabase sdb15 = new StudentDatabase(getApplicationContext());
+            Cursor c15 = sdb15.getCourseLength2();
+
+            Intent intent = new Intent(TermDetailsActivity.this, CourseDetailsActivity.class);
+
+            while (c15.moveToNext()) {
+                if (btn9.getText().toString().equals(c15.getString(c15.getColumnIndexOrThrow("title")))) {
+
+                    int term_id = Integer.parseInt(c15.getString(c15.getColumnIndexOrThrow("_id")));
+                    String termTitle = c15.getString(c15.getColumnIndexOrThrow("title"));
+                    String startDate = c15.getString(c15.getColumnIndexOrThrow("start_date"));
+                    String endDate = c15.getString(c15.getColumnIndexOrThrow("end_date"));
+                    String optionalNotes = c15.getString(c15.getColumnIndexOrThrow("optional_note"));
+                    findRemainingWeeks(termTitle, startDate, endDate, intent, term_id, optionalNotes);
+                }
+            }
+        });
+
         btn0.setVisibility(View.INVISIBLE);
         btn1.setVisibility(View.INVISIBLE);
         btn2.setVisibility(View.INVISIBLE);
         btn3.setVisibility(View.INVISIBLE);
         btn4.setVisibility(View.INVISIBLE);
         btn5.setVisibility(View.INVISIBLE);
+        btn6.setVisibility(View.INVISIBLE);
+        btn7.setVisibility(View.INVISIBLE);
+        btn8.setVisibility(View.INVISIBLE);
+        btn9.setVisibility(View.INVISIBLE);
 
 
         assert c != null;
@@ -234,6 +322,26 @@ public class TermDetailsActivity extends AppCompatActivity {
                     case 5:
                         btn5.setText(c.getString(1));
                         btn5.setVisibility(View.VISIBLE);
+                        ++i;
+                        break;
+                    case 6:
+                        btn6.setText(c.getString(1));
+                        btn6.setVisibility(View.VISIBLE);
+                        ++i;
+                        break;
+                    case 7:
+                        btn7.setText(c.getString(1));
+                        btn7.setVisibility(View.VISIBLE);
+                        ++i;
+                        break;
+                    case 8:
+                        btn8.setText(c.getString(1));
+                        btn8.setVisibility(View.VISIBLE);
+                        ++i;
+                        break;
+                    case 9:
+                        btn9.setText(c.getString(1));
+                        btn9.setVisibility(View.VISIBLE);
                         ++i;
                         break;
                 }
