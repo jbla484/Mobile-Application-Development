@@ -5,7 +5,6 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -16,10 +15,10 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -27,38 +26,37 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class NotificationService extends Service {
+    private static final String TAG = "DEBUG";
     public int counter=0;
 
-    Alarm alarm = new Alarm();
+    private final Alarm alarm = new Alarm();
+    private final ArrayList<Alarm> ALARMS = new ArrayList<>();
 
     @Override
     public void onCreate() {
         super.onCreate();
-
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O)
-            startMyOwnForeground();
-        else
-            startForeground(1, new Notification());
+        startMyOwnForeground();
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private void startMyOwnForeground() {
-        Log.d("DEBUG", "startMyOwnForeground: ");
+        Log.d(TAG, "startMyOwnForeground: ");
         String NOTIFICATION_CHANNEL_ID = "example.permanence";
         String channelName = "Background Service";
-        NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
-        chan.setLightColor(Color.BLUE);
-        chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
+        channel.setLightColor(Color.BLUE);
+        channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
-        notificationManager.createNotificationChannel(chan);
+        notificationManager.createNotificationChannel(channel);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         alarm.setAlarm(this);
+        ALARMS.add(alarm);
 
-        Log.d("DEBUG", "onStartCommand: notification");
+        Log.d(TAG, "onStartCommand: notification");
         super.onStartCommand(intent, flags, startId);
         startTimer();
         return START_STICKY;
@@ -66,8 +64,7 @@ public class NotificationService extends Service {
 
     @Override
     public void onDestroy() {
-        Log.d("DEBUG", "onDestroy: notification");
-        startService(new Intent(this, NotificationService.class));
+        Log.d(TAG, "onDestroy: notification");
         super.onDestroy();
 
         Intent broadcastIntent = new Intent();
@@ -76,11 +73,9 @@ public class NotificationService extends Service {
         this.sendBroadcast(broadcastIntent);
     }
 
-    private Timer timer;
-    private TimerTask timerTask;
     public void startTimer() {
-        timer = new Timer();
-        timerTask = new TimerTask() {
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             public void run() {
 
@@ -103,7 +98,7 @@ public class NotificationService extends Service {
                 try {
                     dateNow = sdf.parse(dateString2);
                 } catch (ParseException pe) {
-
+                    Log.d(TAG, "run: caught exception");
                 }
 
                 Log.i("INFO", "onPostExecute: Today's date: " + dateNow);
@@ -125,14 +120,14 @@ public class NotificationService extends Service {
                     try {
                         startDate = sdf.parse(dateString3);
                     } catch (ParseException pe) {
-
+                        Log.d(TAG, "run: caught exception");
                     }
 
                     Date endDate = null;
                     try {
                         endDate = sdf.parse(dateString4);
                     } catch (ParseException pe) {
-
+                        Log.d(TAG, "run: caught exception");
                     }
 
                     Log.d("INFO", "run: course title " + result.getString(1));
@@ -143,31 +138,30 @@ public class NotificationService extends Service {
                     try {
                         startDateMinus4 = sdf.parse(dateStringMinus7);
                     } catch (ParseException pe) {
-
+                        Log.d(TAG, "run: caught exception");
                     }
 
                     Date endDateMinus7 = null;
                     try {
                         endDateMinus7 = sdf.parse(dateStringMinus7End);
                     } catch (ParseException pe) {
-
+                        Log.d(TAG, "run: caught exception");
                     }
 
                     // Compare dates
+                    assert dateNow != null;
                     if (dateNow.compareTo(startDate) < 0 && dateNow.compareTo(startDateMinus4) > 0) {
                         Log.i("INFO", "Course start date is within the next 7 days.");
                         startFound = true;
                         break;
-                    } if (dateNow.compareTo(endDate) < 0 && dateNow.compareTo(endDateMinus7) > 0) {
+                    }
+                    if (dateNow.compareTo(endDate) < 0 && dateNow.compareTo(endDateMinus7) > 0) {
                         Log.i("INFO", "Course end date is within the next 7 days.");
                         endFound = true;
                         break;
                     } else {
                         Log.i("INFO", "Course start date or end date is not within the next 7 days.");
 
-                    }
-                    if (startFound || endFound) {
-                        break;
                     }
                 }
                 if (startFound) {
@@ -178,12 +172,12 @@ public class NotificationService extends Service {
                     String body = "You have an upcoming course starting within the next 7 days.";
 
                     Intent closingIntent = new Intent(NotificationService.this, ClosingBackGroundService.class);
-                    PendingIntent actionIntent = PendingIntent.getBroadcast(NotificationService.this,0,closingIntent,PendingIntent.FLAG_IMMUTABLE);
+                    PendingIntent actionIntent = PendingIntent.getBroadcast(NotificationService.this, 0, closingIntent, PendingIntent.FLAG_IMMUTABLE);
 
                     NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(NotificationService.this, "example.permanence");
                     Notification notification = notificationBuilder.setOngoing(true)
                             .setSmallIcon(R.drawable.ic_launcher_foreground)
-                            .addAction(R.mipmap.ic_launcher,"Close Notification", actionIntent)
+                            .addAction(R.mipmap.ic_launcher, "Close Notification", actionIntent)
                             .setContentTitle("Upcoming Course")
                             .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                             .setContentText(body)
@@ -193,7 +187,7 @@ public class NotificationService extends Service {
                             .build();
                     notification.flags = 1337;
                     startForeground(2, notification);
-                    Log.i("Count", "=========  "+ (counter++));
+                    Log.i("Count", "=========  " + (counter++));
 
                     startFound = false;
                 }
@@ -205,12 +199,12 @@ public class NotificationService extends Service {
                     String body = "You have an course ending within the next 7 days.";
 
                     Intent closingIntent = new Intent(NotificationService.this, ClosingBackGroundService.class);
-                    PendingIntent actionIntent = PendingIntent.getBroadcast(NotificationService.this,0,closingIntent,PendingIntent.FLAG_IMMUTABLE);
+                    PendingIntent actionIntent = PendingIntent.getBroadcast(NotificationService.this, 0, closingIntent, PendingIntent.FLAG_IMMUTABLE);
 
                     NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(NotificationService.this, "example.permanence");
                     Notification notification = notificationBuilder.setOngoing(true)
                             .setSmallIcon(R.drawable.ic_launcher_foreground)
-                            .addAction(R.mipmap.ic_launcher,"Close Notification", actionIntent)
+                            .addAction(R.mipmap.ic_launcher, "Close Notification", actionIntent)
                             .setContentTitle("Course Ending Soon")
                             .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                             .setContentText(body)
@@ -220,7 +214,7 @@ public class NotificationService extends Service {
                             .build();
                     notification.flags = 1337;
                     startForeground(2, notification);
-                    Log.i("Count", "=========  "+ (counter++));
+                    Log.i("Count", "=========  " + (counter++));
 
                     endFound = false;
                 }
@@ -244,14 +238,14 @@ public class NotificationService extends Service {
                     try {
                         startDate = sdf.parse(assessmentStringStart);
                     } catch (ParseException pe) {
-
+                        Log.d(TAG, "run: caught exception");
                     }
 
                     Date endDate = null;
                     try {
                         endDate = sdf.parse(assessmentStringEnd);
                     } catch (ParseException pe) {
-
+                        Log.d(TAG, "run: caught exception");
                     }
 
                     Log.d("INFO", "run: assessment title " + result2.getString(1));
@@ -262,30 +256,29 @@ public class NotificationService extends Service {
                     try {
                         startDateMinus4 = sdf.parse(assessmentStringMinus7Start);
                     } catch (ParseException pe) {
-
+                        Log.d(TAG, "run: caught exception");
                     }
 
                     Date endDateMinus7 = null;
                     try {
                         endDateMinus7 = sdf.parse(assessmentStringMinus7End);
                     } catch (ParseException pe) {
-
+                        Log.d(TAG, "run: caught exception");
                     }
 
                     // Compare dates
+                    assert dateNow != null;
                     if (dateNow.compareTo(startDate) < 0 && dateNow.compareTo(startDateMinus4) > 0) {
                         Log.i("INFO", "Assessment start date is within the next 7 days.");
                         startFound = true;
                         break;
-                    } if (dateNow.compareTo(endDate) < 0 && dateNow.compareTo(endDateMinus7) > 0) {
+                    }
+                    if (dateNow.compareTo(endDate) < 0 && dateNow.compareTo(endDateMinus7) > 0) {
                         Log.i("INFO", "Assessment end date is within the next 7 days.");
                         endFound = true;
                         break;
                     } else {
                         Log.i("INFO", "Assessment start date or end date is not within the next 7 days.");
-                    }
-                    if (startFound || endFound) {
-                        break;
                     }
                 }
                 if (startFound) {
@@ -296,12 +289,12 @@ public class NotificationService extends Service {
                     String body = "You have an upcoming assessment starting within the next 7 days.";
 
                     Intent closingIntent = new Intent(NotificationService.this, ClosingBackGroundService.class);
-                    PendingIntent actionIntent = PendingIntent.getBroadcast(NotificationService.this,0,closingIntent,PendingIntent.FLAG_IMMUTABLE);
+                    PendingIntent actionIntent = PendingIntent.getBroadcast(NotificationService.this, 0, closingIntent, PendingIntent.FLAG_IMMUTABLE);
 
                     NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(NotificationService.this, "example.permanence");
                     Notification notification = notificationBuilder.setOngoing(true)
                             .setSmallIcon(R.drawable.ic_launcher_foreground)
-                            .addAction(R.mipmap.ic_launcher,"Close Notification", actionIntent)
+                            .addAction(R.mipmap.ic_launcher, "Close Notification", actionIntent)
                             .setContentTitle("Upcoming Assessment")
                             .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                             .setContentText(body)
@@ -311,9 +304,8 @@ public class NotificationService extends Service {
                             .build();
                     notification.flags = 1337;
                     startForeground(2, notification);
-                    Log.i("Count", "=========  "+ (counter++));
+                    Log.i("Count", "=========  " + (counter++));
 
-                    startFound = false;
                 }
                 if (endFound) {
                     // Set notification if there is an upcoming assessment.
@@ -323,12 +315,12 @@ public class NotificationService extends Service {
                     String body = "You have an assessment ending within the next 7 days.";
 
                     Intent closingIntent = new Intent(NotificationService.this, ClosingBackGroundService.class);
-                    PendingIntent actionIntent = PendingIntent.getBroadcast(NotificationService.this,0,closingIntent,PendingIntent.FLAG_IMMUTABLE);
+                    PendingIntent actionIntent = PendingIntent.getBroadcast(NotificationService.this, 0, closingIntent, PendingIntent.FLAG_IMMUTABLE);
 
                     NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(NotificationService.this, "example.permanence");
                     Notification notification = notificationBuilder.setOngoing(true)
                             .setSmallIcon(R.drawable.ic_launcher_foreground)
-                            .addAction(R.mipmap.ic_launcher,"Close Notification", actionIntent)
+                            .addAction(R.mipmap.ic_launcher, "Close Notification", actionIntent)
                             .setContentTitle("Assessment Ending Soon")
                             .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                             .setContentText(body)
@@ -338,14 +330,13 @@ public class NotificationService extends Service {
                             .build();
                     notification.flags = 1337;
                     startForeground(2, notification);
-                    Log.i("Count", "=========  "+ (counter++));
+                    Log.i("Count", "=========  " + (counter++));
 
-                    endFound = false;
                 }
             }
         };
         // Wait 4 hours to receive the notification.
-        timer.schedule(timerTask, 1000, 1000);
+        timer.schedule(timerTask, 14400000, 43200000);
         //timer.schedule(timerTask, 14400000, 43200000);
     }
 
@@ -388,13 +379,6 @@ public class NotificationService extends Service {
             return 12;
         }
         return 0;
-    }
-
-    public void stoptimertask() {
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
-        }
     }
 
     @Nullable

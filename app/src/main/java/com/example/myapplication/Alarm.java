@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
 import android.util.Log;
-import android.widget.Toast;
 
 public class Alarm extends BroadcastReceiver
 {
@@ -17,11 +16,7 @@ public class Alarm extends BroadcastReceiver
         Log.d("DEBUG", "onReceive: alarm");
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "myapp::partial_wake_lock");
-        wl.acquire(10*60*1000L /*10 minutes*/);
-
-        // Put here YOUR code.
-        Toast.makeText(context, "Alarm !!!!!!!!!!", Toast.LENGTH_LONG).show(); // For example
-
+        wl.acquire(10*60*1000L);
         wl.release();
     }
 
@@ -30,15 +25,7 @@ public class Alarm extends BroadcastReceiver
         Log.d("DEBUG", "setAlarm: alarm");
         AlarmManager am =( AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent("example.START_ALARM");
-        PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, PendingIntent.FLAG_MUTABLE);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000, pi); // Millisec * Second * Minute
-    }
-
-    public void cancelAlarm(Context context)
-    {
-        Intent intent = new Intent(context, Alarm.class);
-        PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(sender);
+        PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, PendingIntent.FLAG_IMMUTABLE);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 60000, pi);
     }
 }
