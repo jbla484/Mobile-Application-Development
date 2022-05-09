@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.fragment.app.FragmentManager;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -19,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,6 +27,7 @@ import java.util.Date;
 
 public class TermDetailsActivity extends AppCompatActivity {
 
+    private static final String TAG = "DEBUG";
     private int termId = 0;
     private GestureDetectorCompat mDetector;
 
@@ -37,18 +38,15 @@ public class TermDetailsActivity extends AppCompatActivity {
         mDetector = new GestureDetectorCompat(this, new MyGestureListener());
 
         FloatingActionButton fab = findViewById(R.id.floatingActionButton2);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(TermDetailsActivity.this,AddCourseActivity.class);
-                intent.putExtra("monthValueTerm", getIntent().getStringExtra("monthValue"));
-                intent.putExtra("termNameTerm", getIntent().getStringExtra("termName"));
-                intent.putExtra("termStartTerm", getIntent().getStringExtra("termStart"));
-                intent.putExtra("termEndTerm", getIntent().getStringExtra("termEnd"));
-                intent.putExtra("termNameAndDateTerm", getIntent().getStringExtra("termNameAndDate"));
-                intent.putExtra("termIdTerm", getIntent().getStringExtra("termId"));
-                startActivity(intent);
-            }
+        fab.setOnClickListener(view -> {
+            Intent intent = new Intent(TermDetailsActivity.this,AddCourseActivity.class);
+            intent.putExtra("monthValueTerm", getIntent().getStringExtra("monthValue"));
+            intent.putExtra("termNameTerm", getIntent().getStringExtra("termName"));
+            intent.putExtra("termStartTerm", getIntent().getStringExtra("termStart"));
+            intent.putExtra("termEndTerm", getIntent().getStringExtra("termEnd"));
+            intent.putExtra("termNameAndDateTerm", getIntent().getStringExtra("termNameAndDate"));
+            intent.putExtra("termIdTerm", getIntent().getStringExtra("termId"));
+            startActivity(intent);
         });
 
         //View courses and term details
@@ -58,157 +56,139 @@ public class TermDetailsActivity extends AppCompatActivity {
             termId = Integer.parseInt(getIntent().getStringExtra("termId"));
             c = sdb.getCourses2(termId);
         } catch (Exception e) {
-            Log.i("ERROR", "onCreate: s == null");
+            Log.i(TAG, "ERROR onCreate: s == null");
         }
 
         //Populate remaining weeks
         String weeks = getIntent().getStringExtra("monthValue");
-        TextView textView = (TextView) findViewById(R.id.remainingWeeksValue);
+        TextView textView = findViewById(R.id.remainingWeeksValue);
         textView.setText(weeks);
-        TextView textViewTitle = (TextView) findViewById(R.id.termView);
+        TextView textViewTitle = findViewById(R.id.termView);
         textViewTitle.setText(getIntent().getStringExtra("termNameAndDate"));
 
-        Button btn0 = (Button) findViewById(R.id.course_button_first);
-        Button btn1 = (Button) findViewById(R.id.course_button_second);
-        Button btn2 = (Button) findViewById(R.id.course_button_third);
-        Button btn3 = (Button) findViewById(R.id.course_button_fourth);
-        Button btn4 = (Button) findViewById(R.id.course_button_fifth);
-        Button btn5 = (Button) findViewById(R.id.course_button_sixth);
+        Button btn0 = findViewById(R.id.course_button_first);
+        Button btn1 = findViewById(R.id.course_button_second);
+        Button btn2 = findViewById(R.id.course_button_third);
+        Button btn3 = findViewById(R.id.course_button_fourth);
+        Button btn4 = findViewById(R.id.course_button_fifth);
+        Button btn5 = findViewById(R.id.course_button_sixth);
 
-        btn0.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btn0.setOnClickListener(view -> {
 
-                StudentDatabase sdb = new StudentDatabase(getApplicationContext());
-                Cursor c = sdb.getCourseLength2();
+            StudentDatabase sdb1 = new StudentDatabase(getApplicationContext());
+            Cursor c1 = sdb1.getCourseLength2();
 
-                Intent intent = new Intent(TermDetailsActivity.this, CourseDetailsActivity.class);
+            Intent intent = new Intent(TermDetailsActivity.this, CourseDetailsActivity.class);
 
-                while (c.moveToNext()) {
-                    if (btn0.getText().toString().equals(c.getString(c.getColumnIndexOrThrow("title")))) {
+            while (c1.moveToNext()) {
+                if (btn0.getText().toString().equals(c1.getString(c1.getColumnIndexOrThrow("title")))) {
 
-                        int term_id = Integer.parseInt(c.getString(c.getColumnIndexOrThrow("_id")));
-                        String termTitle = c.getString(c.getColumnIndexOrThrow("title"));
-                        String startDate = c.getString(c.getColumnIndexOrThrow("start_date"));
-                        String endDate = c.getString(c.getColumnIndexOrThrow("end_date"));
-                        String optionalNotes = c.getString(c.getColumnIndexOrThrow("optional_note"));
-                        findRemainingWeeks(termTitle, startDate, endDate, intent, term_id, optionalNotes);
-                    }
+                    int term_id = Integer.parseInt(c1.getString(c1.getColumnIndexOrThrow("_id")));
+                    String termTitle = c1.getString(c1.getColumnIndexOrThrow("title"));
+                    String startDate = c1.getString(c1.getColumnIndexOrThrow("start_date"));
+                    String endDate = c1.getString(c1.getColumnIndexOrThrow("end_date"));
+                    String optionalNotes = c1.getString(c1.getColumnIndexOrThrow("optional_note"));
+                    findRemainingWeeks(termTitle, startDate, endDate, intent, term_id, optionalNotes);
                 }
             }
         });
 
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btn1.setOnClickListener(view -> {
 
-                StudentDatabase sdb = new StudentDatabase(getApplicationContext());
-                Cursor c = sdb.getCourseLength2();
+            StudentDatabase sdb12 = new StudentDatabase(getApplicationContext());
+            Cursor c12 = sdb12.getCourseLength2();
 
-                Intent intent = new Intent(TermDetailsActivity.this, CourseDetailsActivity.class);
+            Intent intent = new Intent(TermDetailsActivity.this, CourseDetailsActivity.class);
 
-                while (c.moveToNext()) {
-                    if (btn1.getText().toString().equals(c.getString(c.getColumnIndexOrThrow("title")))) {
+            while (c12.moveToNext()) {
+                if (btn1.getText().toString().equals(c12.getString(c12.getColumnIndexOrThrow("title")))) {
 
-                        int term_id = Integer.parseInt(c.getString(c.getColumnIndexOrThrow("_id")));
-                        String termTitle = c.getString(c.getColumnIndexOrThrow("title"));
-                        String startDate = c.getString(c.getColumnIndexOrThrow("start_date"));
-                        String endDate = c.getString(c.getColumnIndexOrThrow("end_date"));
-                        String optionalNotes = c.getString(c.getColumnIndexOrThrow("optional_note"));
-                        findRemainingWeeks(termTitle, startDate, endDate, intent, term_id, optionalNotes);
-                    }
+                    int term_id = Integer.parseInt(c12.getString(c12.getColumnIndexOrThrow("_id")));
+                    String termTitle = c12.getString(c12.getColumnIndexOrThrow("title"));
+                    String startDate = c12.getString(c12.getColumnIndexOrThrow("start_date"));
+                    String endDate = c12.getString(c12.getColumnIndexOrThrow("end_date"));
+                    String optionalNotes = c12.getString(c12.getColumnIndexOrThrow("optional_note"));
+                    findRemainingWeeks(termTitle, startDate, endDate, intent, term_id, optionalNotes);
                 }
             }
         });
 
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btn2.setOnClickListener(view -> {
 
-                StudentDatabase sdb = new StudentDatabase(getApplicationContext());
-                Cursor c = sdb.getCourseLength2();
+            StudentDatabase sdb13 = new StudentDatabase(getApplicationContext());
+            Cursor c13 = sdb13.getCourseLength2();
 
-                Intent intent = new Intent(TermDetailsActivity.this, CourseDetailsActivity.class);
+            Intent intent = new Intent(TermDetailsActivity.this, CourseDetailsActivity.class);
 
-                while (c.moveToNext()) {
-                    if (btn2.getText().toString().equals(c.getString(c.getColumnIndexOrThrow("title")))) {
+            while (c13.moveToNext()) {
+                if (btn2.getText().toString().equals(c13.getString(c13.getColumnIndexOrThrow("title")))) {
 
-                        int term_id = Integer.parseInt(c.getString(c.getColumnIndexOrThrow("_id")));
-                        String termTitle = c.getString(c.getColumnIndexOrThrow("title"));
-                        String startDate = c.getString(c.getColumnIndexOrThrow("start_date"));
-                        String endDate = c.getString(c.getColumnIndexOrThrow("end_date"));
-                        String optionalNotes = c.getString(c.getColumnIndexOrThrow("optional_note"));
-                        findRemainingWeeks(termTitle, startDate, endDate, intent, term_id, optionalNotes);
-                    }
+                    int term_id = Integer.parseInt(c13.getString(c13.getColumnIndexOrThrow("_id")));
+                    String termTitle = c13.getString(c13.getColumnIndexOrThrow("title"));
+                    String startDate = c13.getString(c13.getColumnIndexOrThrow("start_date"));
+                    String endDate = c13.getString(c13.getColumnIndexOrThrow("end_date"));
+                    String optionalNotes = c13.getString(c13.getColumnIndexOrThrow("optional_note"));
+                    findRemainingWeeks(termTitle, startDate, endDate, intent, term_id, optionalNotes);
                 }
             }
         });
 
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btn3.setOnClickListener(view -> {
 
-                StudentDatabase sdb = new StudentDatabase(getApplicationContext());
-                Cursor c = sdb.getCourseLength2();
+            StudentDatabase sdb14 = new StudentDatabase(getApplicationContext());
+            Cursor c14 = sdb14.getCourseLength2();
 
-                Intent intent = new Intent(TermDetailsActivity.this, CourseDetailsActivity.class);
+            Intent intent = new Intent(TermDetailsActivity.this, CourseDetailsActivity.class);
 
-                while (c.moveToNext()) {
-                    if (btn3.getText().toString().equals(c.getString(c.getColumnIndexOrThrow("title")))) {
+            while (c14.moveToNext()) {
+                if (btn3.getText().toString().equals(c14.getString(c14.getColumnIndexOrThrow("title")))) {
 
-                        int term_id = Integer.parseInt(c.getString(c.getColumnIndexOrThrow("_id")));
-                        String termTitle = c.getString(c.getColumnIndexOrThrow("title"));
-                        String startDate = c.getString(c.getColumnIndexOrThrow("start_date"));
-                        String endDate = c.getString(c.getColumnIndexOrThrow("end_date"));
-                        String optionalNotes = c.getString(c.getColumnIndexOrThrow("optional_note"));
-                        findRemainingWeeks(termTitle, startDate, endDate, intent, term_id, optionalNotes);
-                    }
+                    int term_id = Integer.parseInt(c14.getString(c14.getColumnIndexOrThrow("_id")));
+                    String termTitle = c14.getString(c14.getColumnIndexOrThrow("title"));
+                    String startDate = c14.getString(c14.getColumnIndexOrThrow("start_date"));
+                    String endDate = c14.getString(c14.getColumnIndexOrThrow("end_date"));
+                    String optionalNotes = c14.getString(c14.getColumnIndexOrThrow("optional_note"));
+                    findRemainingWeeks(termTitle, startDate, endDate, intent, term_id, optionalNotes);
                 }
             }
         });
 
-        btn4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btn4.setOnClickListener(view -> {
 
-                StudentDatabase sdb = new StudentDatabase(getApplicationContext());
-                Cursor c = sdb.getCourseLength2();
+            StudentDatabase sdb16 = new StudentDatabase(getApplicationContext());
+            Cursor c16 = sdb16.getCourseLength2();
 
-                Intent intent = new Intent(TermDetailsActivity.this, CourseDetailsActivity.class);
+            Intent intent = new Intent(TermDetailsActivity.this, CourseDetailsActivity.class);
 
-                while (c.moveToNext()) {
-                    if (btn4.getText().toString().equals(c.getString(c.getColumnIndexOrThrow("title")))) {
+            while (c16.moveToNext()) {
+                if (btn4.getText().toString().equals(c16.getString(c16.getColumnIndexOrThrow("title")))) {
 
-                        int term_id = Integer.parseInt(c.getString(c.getColumnIndexOrThrow("_id")));
-                        String termTitle = c.getString(c.getColumnIndexOrThrow("title"));
-                        String startDate = c.getString(c.getColumnIndexOrThrow("start_date"));
-                        String endDate = c.getString(c.getColumnIndexOrThrow("end_date"));
-                        String optionalNotes = c.getString(c.getColumnIndexOrThrow("optional_note"));
-                        findRemainingWeeks(termTitle, startDate, endDate, intent, term_id, optionalNotes);
-                    }
+                    int term_id = Integer.parseInt(c16.getString(c16.getColumnIndexOrThrow("_id")));
+                    String termTitle = c16.getString(c16.getColumnIndexOrThrow("title"));
+                    String startDate = c16.getString(c16.getColumnIndexOrThrow("start_date"));
+                    String endDate = c16.getString(c16.getColumnIndexOrThrow("end_date"));
+                    String optionalNotes = c16.getString(c16.getColumnIndexOrThrow("optional_note"));
+                    findRemainingWeeks(termTitle, startDate, endDate, intent, term_id, optionalNotes);
                 }
             }
         });
 
-        btn5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btn5.setOnClickListener(view -> {
 
-                StudentDatabase sdb = new StudentDatabase(getApplicationContext());
-                Cursor c = sdb.getCourseLength2();
+            StudentDatabase sdb15 = new StudentDatabase(getApplicationContext());
+            Cursor c15 = sdb15.getCourseLength2();
 
-                Intent intent = new Intent(TermDetailsActivity.this, CourseDetailsActivity.class);
+            Intent intent = new Intent(TermDetailsActivity.this, CourseDetailsActivity.class);
 
-                while (c.moveToNext()) {
-                    if (btn5.getText().toString().equals(c.getString(c.getColumnIndexOrThrow("title")))) {
+            while (c15.moveToNext()) {
+                if (btn5.getText().toString().equals(c15.getString(c15.getColumnIndexOrThrow("title")))) {
 
-                        int term_id = Integer.parseInt(c.getString(c.getColumnIndexOrThrow("_id")));
-                        String termTitle = c.getString(c.getColumnIndexOrThrow("title"));
-                        String startDate = c.getString(c.getColumnIndexOrThrow("start_date"));
-                        String endDate = c.getString(c.getColumnIndexOrThrow("end_date"));
-                        String optionalNotes = c.getString(c.getColumnIndexOrThrow("optional_note"));
-                        findRemainingWeeks(termTitle, startDate, endDate, intent, term_id, optionalNotes);
-                    }
+                    int term_id = Integer.parseInt(c15.getString(c15.getColumnIndexOrThrow("_id")));
+                    String termTitle = c15.getString(c15.getColumnIndexOrThrow("title"));
+                    String startDate = c15.getString(c15.getColumnIndexOrThrow("start_date"));
+                    String endDate = c15.getString(c15.getColumnIndexOrThrow("end_date"));
+                    String optionalNotes = c15.getString(c15.getColumnIndexOrThrow("optional_note"));
+                    findRemainingWeeks(termTitle, startDate, endDate, intent, term_id, optionalNotes);
                 }
             }
         });
@@ -221,6 +201,7 @@ public class TermDetailsActivity extends AppCompatActivity {
         btn5.setVisibility(View.INVISIBLE);
 
 
+        assert c != null;
         if (c.getCount() >= -1) {
             int i = 0;
             while (c.moveToNext()) {
@@ -349,13 +330,15 @@ public class TermDetailsActivity extends AppCompatActivity {
 
         int numOfWeeks = 0;
         try {
-            Date userStart = new SimpleDateFormat("yyyy MM dd").parse(parseStart[2] + " " + monthIndexStart + " " + parseStart[1]);
-            Date userEnd = new SimpleDateFormat("yyyy MM dd").parse(parseEnd[2] + " " + monthIndexEnd + " " + parseEnd[1]);
+            @SuppressLint("SimpleDateFormat") Date userStart = new SimpleDateFormat("yyyy MM dd").parse(parseStart[2] + " " + monthIndexStart + " " + parseStart[1]);
+            @SuppressLint("SimpleDateFormat") Date userEnd = new SimpleDateFormat("yyyy MM dd").parse(parseEnd[2] + " " + monthIndexEnd + " " + parseEnd[1]);
+            assert userEnd != null;
+            assert userStart != null;
             long diff =  userEnd.getTime() - userStart.getTime();
             int numOfDays = (int) (diff / (1000 * 60 * 60 * 24));
             numOfWeeks = (numOfDays / 7);
 
-            Log.i("INFORMATION", "onClick: " + numOfWeeks);
+            Log.i(TAG, "onClick: " + numOfWeeks);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -378,13 +361,13 @@ public class TermDetailsActivity extends AppCompatActivity {
 
         @Override
         public boolean onDown(MotionEvent event) {
-            Log.i("INFO", "onDown: ");
+            Log.i(TAG, "onDown: ");
             return true;
         }
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            Log.i("INFO", "onFling: ");
+            Log.i(TAG, "onFling: ");
             if (velocityX > 500) {
                 startActivity(new Intent(TermDetailsActivity.this, DashboardActivity.class));
             }
@@ -452,7 +435,6 @@ public class TermDetailsActivity extends AppCompatActivity {
                     new DeleteTerm().execute(termId);
                     startActivity(new Intent(TermDetailsActivity.this, DashboardActivity.class));
                 }
-
                 return true;
 
             default:

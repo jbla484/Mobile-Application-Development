@@ -14,11 +14,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.Calendar;
 import java.util.Objects;
 
 public class EditTermActivity extends AppCompatActivity {
 
+    private static final String TAG = "DEBUG";
     private DatePickerDialog datePickerDialog;
     private DatePickerDialog datePickerDialog2;
     private Button dateButton;
@@ -43,7 +43,7 @@ public class EditTermActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_term);
 
         initDatePicker();
-        EditText edit = (EditText) findViewById(R.id.termTitleTextEdit);
+        EditText edit = findViewById(R.id.termTitleTextEdit);
         edit.setText(getIntent().getStringExtra("termName"));
 
         dateButton = findViewById(R.id.datePickerButton);
@@ -54,19 +54,18 @@ public class EditTermActivity extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        Button button = (Button) this.findViewById(R.id.editTermButton);
+        Button button = this.findViewById(R.id.editTermButton);
         button.setOnClickListener(view -> {
-            EditText termTitle = (EditText) findViewById(R.id.termTitleTextEdit);
-            String termTitleString = termTitle.getText().toString();
+            String termTitleString = edit.getText().toString();
 
-            Button termStart = (Button) findViewById(R.id.datePickerButton);
+            Button termStart = dateButton;
             String termStartString = termStart.getText().toString();
 
-            Button termEnd = (Button) findViewById(R.id.datePickerButton2);
+            Button termEnd = dateButton2;
             String termEndString = termEnd.getText().toString();
 
             new EditTerm().execute(getIntent().getStringExtra("termId"), termTitleString, termStartString, termEndString);
-            Log.i("INFORMATION", "onClick: Added to database");
+            Log.i(TAG, "onClick: Added to database");
 
             Intent intent = new Intent(EditTermActivity.this, TermDetailsActivity.class);
             intent.putExtra("monthValue", getIntent().getStringExtra("monthValueTerm"));
@@ -78,31 +77,21 @@ public class EditTermActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        Button button2 = (Button) this.findViewById(R.id.datePickerButton);
-        button2.setOnClickListener(view -> openDatePicker(view));
+        Button button2 = this.findViewById(R.id.datePickerButton);
+        button2.setOnClickListener(this::openDatePicker);
 
-        Button button3 = (Button) this.findViewById(R.id.datePickerButton2);
-        button3.setOnClickListener(view -> openDatePicker2(view));
-    }
-
-    private String getTodaysDate() {
-        Calendar calender = Calendar.getInstance();
-        int year = calender.get(Calendar.YEAR);
-        int month = calender.get(Calendar.MONTH);
-        month += 1;
-        int day = calender.get(Calendar.DAY_OF_MONTH);
-        return makeDateString(day, month, year);
+        Button button3 = this.findViewById(R.id.datePickerButton2);
+        button3.setOnClickListener(this::openDatePicker2);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         // Determine which menu option was chosen
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                //SHARE COURSE NOTES
-                onBackPressed();
-                return true;
+        if (item.getItemId() == android.R.id.home) {//SHARE COURSE NOTES
+            onBackPressed();
+            return true;
         }
-        return true;
+        Log.d(TAG, "onOptionsItemSelected: error");
+        return false;
     }
 
     private void initDatePicker() {
@@ -114,8 +103,6 @@ public class EditTermActivity extends AppCompatActivity {
 
         String[] split = getIntent().getStringExtra("termStart").split(" ");
 
-
-        Calendar calender = Calendar.getInstance();
         int year = Integer.parseInt(split[2]);
         int month = getMonthNumber(split[0]);
         int day = Integer.parseInt(split[1]);
@@ -132,8 +119,6 @@ public class EditTermActivity extends AppCompatActivity {
 
         String[] split2 = getIntent().getStringExtra("termEnd").split(" ");
 
-
-        Calendar calender2 = Calendar.getInstance();
         int year2 = Integer.parseInt(split2[2]);
         int month2 = getMonthNumber(split2[0]);
         int day2 = Integer.parseInt(split2[1]);

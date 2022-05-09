@@ -101,8 +101,8 @@ public class NotificationService extends Service {
                     Log.d(TAG, "run: caught exception");
                 }
 
-                Log.i("INFO", "onPostExecute: Today's date: " + dateNow);
-                Log.i("INFO", "\n\nChecking Courses and Assessments:\n\n");
+                Log.i(TAG, "onPostExecute: Today's date: " + dateNow);
+                Log.i(TAG, "\n\nChecking Courses and Assessments:\n\n");
 
                 // If courses were found in the database, search them for their start and end time.
                 while (result.moveToNext()) {
@@ -130,9 +130,9 @@ public class NotificationService extends Service {
                         Log.d(TAG, "run: caught exception");
                     }
 
-                    Log.d("INFO", "run: course title " + result.getString(1));
-                    Log.d("INFO", "run: start date " + startDate);
-                    Log.d("INFO", "run: end date " + endDate);
+                    Log.d(TAG, "run: course title " + result.getString(1));
+                    Log.d(TAG, "run: start date " + startDate);
+                    Log.d(TAG, "run: end date " + endDate);
 
                     Date startDateMinus4 = null;
                     try {
@@ -151,16 +151,16 @@ public class NotificationService extends Service {
                     // Compare dates
                     assert dateNow != null;
                     if (dateNow.compareTo(startDate) < 0 && dateNow.compareTo(startDateMinus4) > 0) {
-                        Log.i("INFO", "Course start date is within the next 7 days.");
+                        Log.i(TAG, "Course start date is within the next 7 days.");
                         startFound = true;
                         break;
                     }
                     if (dateNow.compareTo(endDate) < 0 && dateNow.compareTo(endDateMinus7) > 0) {
-                        Log.i("INFO", "Course end date is within the next 7 days.");
+                        Log.i(TAG, "Course end date is within the next 7 days.");
                         endFound = true;
                         break;
                     } else {
-                        Log.i("INFO", "Course start date or end date is not within the next 7 days.");
+                        Log.i(TAG, "Course start date or end date is not within the next 7 days.");
 
                     }
                 }
@@ -187,7 +187,7 @@ public class NotificationService extends Service {
                             .build();
                     notification.flags = 1337;
                     startForeground(2, notification);
-                    Log.i("Count", "=========  " + (counter++));
+                    Log.i(TAG, "Count =========  " + (counter++));
 
                     startFound = false;
                 }
@@ -214,7 +214,7 @@ public class NotificationService extends Service {
                             .build();
                     notification.flags = 1337;
                     startForeground(2, notification);
-                    Log.i("Count", "=========  " + (counter++));
+                    Log.i(TAG, "Count =========  " + (counter++));
 
                     endFound = false;
                 }
@@ -248,9 +248,9 @@ public class NotificationService extends Service {
                         Log.d(TAG, "run: caught exception");
                     }
 
-                    Log.d("INFO", "run: assessment title " + result2.getString(1));
-                    Log.d("INFO", "run: start date " + startDate);
-                    Log.d("INFO", "run: end date " + endDate);
+                    Log.d(TAG, "run: assessment title " + result2.getString(1));
+                    Log.d(TAG, "run: start date " + startDate);
+                    Log.d(TAG, "run: end date " + endDate);
 
                     Date startDateMinus4 = null;
                     try {
@@ -269,16 +269,16 @@ public class NotificationService extends Service {
                     // Compare dates
                     assert dateNow != null;
                     if (dateNow.compareTo(startDate) < 0 && dateNow.compareTo(startDateMinus4) > 0) {
-                        Log.i("INFO", "Assessment start date is within the next 7 days.");
+                        Log.i(TAG, "Assessment start date is within the next 7 days.");
                         startFound = true;
                         break;
                     }
                     if (dateNow.compareTo(endDate) < 0 && dateNow.compareTo(endDateMinus7) > 0) {
-                        Log.i("INFO", "Assessment end date is within the next 7 days.");
+                        Log.i(TAG, "Assessment end date is within the next 7 days.");
                         endFound = true;
                         break;
                     } else {
-                        Log.i("INFO", "Assessment start date or end date is not within the next 7 days.");
+                        Log.i(TAG, "Assessment start date or end date is not within the next 7 days.");
                     }
                 }
                 if (startFound) {
@@ -304,7 +304,7 @@ public class NotificationService extends Service {
                             .build();
                     notification.flags = 1337;
                     startForeground(2, notification);
-                    Log.i("Count", "=========  " + (counter++));
+                    Log.i(TAG, "Count =========  " + (counter++));
 
                 }
                 if (endFound) {
@@ -330,14 +330,13 @@ public class NotificationService extends Service {
                             .build();
                     notification.flags = 1337;
                     startForeground(2, notification);
-                    Log.i("Count", "=========  " + (counter++));
+                    Log.i(TAG, "Count =========  " + (counter++));
 
                 }
             }
         };
         // Wait 4 hours to receive the notification.
         timer.schedule(timerTask, 14400000, 43200000);
-        //timer.schedule(timerTask, 14400000, 43200000);
     }
 
     private int getMonthIndex(String month) {

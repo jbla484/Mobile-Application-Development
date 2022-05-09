@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,14 +20,13 @@ import java.util.Date;
 
 public class DashboardActivity extends AppCompatActivity {
 
+    private static final String TAG = "DEBUG";
     public static int term_id;
 
     public static Intent mServiceIntent;
-    private NotificationService mYourService;
 
     @Override
     protected void onDestroy() {
-        //stopService(mServiceIntent);
         Intent broadcastIntent = new Intent();
         broadcastIntent.setAction("restartservice");
         broadcastIntent.setClass(this, Restarter.class);
@@ -40,28 +39,28 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        mYourService = new NotificationService();
+        NotificationService mYourService = new NotificationService();
         mServiceIntent = new Intent(this, mYourService.getClass());
         if (!isMyServiceRunning(mYourService.getClass())) {
             startService(mServiceIntent);
         }
 
-        Log.d("DEBUG", "onCreate: ");
+        Log.d(TAG, "onCreate: ");
 
         //View terms
         StudentDatabase sdb = new StudentDatabase(getApplicationContext());
         Cursor c = sdb.getData();
 
-        Button btn0 = (Button) findViewById(R.id.button_first);
-        Button btn1 = (Button) findViewById(R.id.button_second);
-        Button btn2 = (Button) findViewById(R.id.button_third);
-        Button btn3 = (Button) findViewById(R.id.button_fourth);
-        Button btn4 = (Button) findViewById(R.id.button_fifth);
-        Button btn5 = (Button) findViewById(R.id.button_sixth);
-        Button btn6 = (Button) findViewById(R.id.button_seventh);
-        Button btn7 = (Button) findViewById(R.id.button_eighth);
-        Button btn8 = (Button) findViewById(R.id.button_ninth);
-        Button btn9 = (Button) findViewById(R.id.button_tenth);
+        Button btn0 = findViewById(R.id.button_first);
+        Button btn1 = findViewById(R.id.button_second);
+        Button btn2 = findViewById(R.id.button_third);
+        Button btn3 = findViewById(R.id.button_fourth);
+        Button btn4 = findViewById(R.id.button_fifth);
+        Button btn5 = findViewById(R.id.button_sixth);
+        Button btn6 = findViewById(R.id.button_seventh);
+        Button btn7 = findViewById(R.id.button_eighth);
+        Button btn8 = findViewById(R.id.button_ninth);
+        Button btn9 = findViewById(R.id.button_tenth);
 
         btn0.setOnClickListener(view -> {
 
@@ -320,20 +319,18 @@ public class DashboardActivity extends AppCompatActivity {
         }
 
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(view -> {
-            startActivity(new Intent(DashboardActivity.this, AddTermActivity.class));
-        });
+        fab.setOnClickListener(view -> startActivity(new Intent(DashboardActivity.this, AddTermActivity.class)));
     }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {
-                Log.i ("Service status", "Running");
+                Log.i (TAG, "Service Running");
                 return true;
             }
         }
-        Log.i ("Service status", "Not running");
+        Log.i (TAG, "Service Not running");
         return false;
     }
 
@@ -420,13 +417,15 @@ public class DashboardActivity extends AppCompatActivity {
 
         int numOfWeeks = 0;
         try {
-            Date userStart = new SimpleDateFormat("yyyy MM dd").parse(parseStart[2] + " " + monthIndexStart + " " + parseStart[1]);
-            Date userEnd = new SimpleDateFormat("yyyy MM dd").parse(parseEnd[2] + " " + monthIndexEnd + " " + parseEnd[1]);
+            @SuppressLint("SimpleDateFormat") Date userStart = new SimpleDateFormat("yyyy MM dd").parse(parseStart[2] + " " + monthIndexStart + " " + parseStart[1]);
+            @SuppressLint("SimpleDateFormat") Date userEnd = new SimpleDateFormat("yyyy MM dd").parse(parseEnd[2] + " " + monthIndexEnd + " " + parseEnd[1]);
+            assert userEnd != null;
+            assert userStart != null;
             long diff =  userEnd.getTime() - userStart.getTime();
             int numOfDays = (int) (diff / (1000 * 60 * 60 * 24));
             numOfWeeks = (numOfDays / 7);
 
-            Log.i("INFORMATION", "onClick: " + numOfWeeks);
+            Log.i(TAG, "onClick: NUMBER OF WEEKS: " + numOfWeeks);
         } catch (ParseException e) {
             e.printStackTrace();
         }

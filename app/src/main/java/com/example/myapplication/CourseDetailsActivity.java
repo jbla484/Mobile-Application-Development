@@ -1,15 +1,9 @@
 package com.example.myapplication;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.Cursor;
-import android.net.ConnectivityManager;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -22,24 +16,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 public class CourseDetailsActivity extends AppCompatActivity {
 
     private int courseId = 0;
     private GestureDetectorCompat mDetector;
-    private final String CHANNEL_ID = "jbla484";
+    private static final String TAG = "DEBUG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +46,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
             courseId = Integer.parseInt(getIntent().getStringExtra("termId"));
             c = sdb.getAssessments2(courseId);
         } catch (Exception e) {
-            Log.i("ERROR", "onCreate: s == null");
+            Log.i(TAG, "onCreate: s == null");
         }
 
         FloatingActionButton fab = findViewById(R.id.floatingActionButton3);
@@ -81,23 +71,23 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
         //Populate remaining weeks
         String weeks = getIntent().getStringExtra("monthValue");
-        TextView textView = (TextView) findViewById(R.id.remainingWeeksValue2);
+        TextView textView = findViewById(R.id.remainingWeeksValue2);
         textView.setText(weeks);
-        TextView textViewTitle = (TextView) findViewById(R.id.termView2);
+        TextView textViewTitle = findViewById(R.id.termView2);
         textViewTitle.setText(getIntent().getStringExtra("termNameAndDate"));
-        TextView textViewNotes = (TextView) findViewById(R.id.termViewNotes);
+        TextView textViewNotes = findViewById(R.id.termViewNotes);
         textViewNotes.setText(getIntent().getStringExtra("optionalNotes"));
 
         if (getIntent().getStringExtra("optionalNotes").equals("")) {
             textViewNotes.setVisibility(View.GONE);
         }
 
-        Button btn0 = (Button) findViewById(R.id.assessment_button_first);
-        Button btn1 = (Button) findViewById(R.id.assessment_button_second);
-        Button btn2 = (Button) findViewById(R.id.assessment_button_third);
-        Button btn3 = (Button) findViewById(R.id.assessment_button_fourth);
-        Button btn4 = (Button) findViewById(R.id.assessment_button_fifth);
-        Button btn5 = (Button) findViewById(R.id.assessment_button_sixth);
+        Button btn0 = findViewById(R.id.assessment_button_first);
+        Button btn1 = findViewById(R.id.assessment_button_second);
+        Button btn2 = findViewById(R.id.assessment_button_third);
+        Button btn3 = findViewById(R.id.assessment_button_fourth);
+        Button btn4 = findViewById(R.id.assessment_button_fifth);
+        Button btn5 = findViewById(R.id.assessment_button_sixth);
 
         btn0.setOnClickListener(view -> {
 
@@ -226,6 +216,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         btn4.setVisibility(View.INVISIBLE);
         btn5.setVisibility(View.INVISIBLE);
 
+        assert c != null;
         if (c.getCount() >= -1) {
             int i = 0;
             while (c.moveToNext()) {
@@ -269,13 +260,13 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
         @Override
         public boolean onDown(MotionEvent event) {
-            Log.i("INFO", "onDown: ");
+            Log.i(TAG, "onDown: ");
             return true;
         }
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            Log.i("INFO", "onFling: ");
+            Log.i(TAG, "onFling: ");
             if (velocityX > 500) {
                 startActivity(new Intent(CourseDetailsActivity.this, DashboardActivity.class));
             }
@@ -319,7 +310,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
             case R.id.action_one_courses:
                 //EDIT COURSE ACTIVITY
-                Log.i("INFO", "onOptionsItemSelected:");
+                Log.i(TAG, "onOptionsItemSelected:");
                 StudentDatabase sdb1 = new StudentDatabase(getApplicationContext());
                 Cursor c1 = sdb1.getCourses3(Integer.parseInt(getIntent().getStringExtra("termId")));
 
@@ -334,7 +325,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
                     intent.putExtra("termInstructorPhone", c1.getString(6));
                     intent.putExtra("termInstructorEmail", c1.getString(7));
                     intent.putExtra("optionalNotes", c1.getString(9));
-                    Log.i("INFO", "onOptionsItemSelected:" + getIntent().getStringExtra("termId"));
+                    Log.i(TAG, "onOptionsItemSelected:" + getIntent().getStringExtra("termId"));
                     startActivity(intent);
                 }
 
@@ -342,7 +333,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
             case R.id.action_two_courses:
                 //DELETE COURSE ACTIVITY
-                Log.i("INFO", "onOptionsItemSelected: ");
+                Log.i(TAG, "onOptionsItemSelected: ");
                 StudentDatabase sdb = new StudentDatabase(getApplicationContext());
                 Cursor c = sdb.getAssessments2(courseId);
 
@@ -379,123 +370,6 @@ public class CourseDetailsActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    public void findRemainingWeeks(String termTitle, String startDate, String endDate, Intent intent, int term_id) {
-        String[] parseStart = startDate.split(" ");
-        int monthIndexStart = 0;
-
-        if (parseStart[0].equals("JAN")) {
-            monthIndexStart = 1;
-        }
-        if (parseStart[0].equals("FEB")) {
-            monthIndexStart = 2;
-        }
-        if (parseStart[0].equals("MAR")) {
-            monthIndexStart = 3;
-        }
-        if (parseStart[0].equals("APR")) {
-            monthIndexStart = 4;
-        }
-        if (parseStart[0].equals("MAY")) {
-            monthIndexStart = 5;
-        }
-        if (parseStart[0].equals("JUN")) {
-            monthIndexStart = 6;
-        }
-        if (parseStart[0].equals("JUL")) {
-            monthIndexStart = 7;
-        }
-        if (parseStart[0].equals("AUG")) {
-            monthIndexStart = 8;
-        }
-        if (parseStart[0].equals("SEP")) {
-            monthIndexStart = 9;
-        }
-        if (parseStart[0].equals("OCT")) {
-            monthIndexStart = 10;
-        }
-        if (parseStart[0].equals("NOV")) {
-            monthIndexStart = 11;
-        }
-        if (parseStart[0].equals("DEC")) {
-            monthIndexStart = 12;
-        }
-
-        String[] parseEnd = endDate.split(" ");
-        int monthIndexEnd = 0;
-
-        if (parseEnd[0].equals("JAN")) {
-            monthIndexEnd = 1;
-        }
-        if (parseEnd[0].equals("FEB")) {
-            monthIndexEnd = 2;
-        }
-        if (parseEnd[0].equals("MAR")) {
-            monthIndexEnd = 3;
-        }
-        if (parseEnd[0].equals("APR")) {
-            monthIndexEnd = 4;
-        }
-        if (parseEnd[0].equals("MAY")) {
-            monthIndexEnd = 5;
-        }
-        if (parseEnd[0].equals("JUN")) {
-            monthIndexEnd = 6;
-        }
-        if (parseEnd[0].equals("JUL")) {
-            monthIndexEnd = 7;
-        }
-        if (parseEnd[0].equals("AUG")) {
-            monthIndexEnd = 8;
-        }
-        if (parseEnd[0].equals("SEP")) {
-            monthIndexEnd = 9;
-        }
-        if (parseEnd[0].equals("OCT")) {
-            monthIndexEnd = 10;
-        }
-        if (parseEnd[0].equals("NOV")) {
-            monthIndexEnd = 11;
-        }
-        if (parseEnd[0].equals("DEC")) {
-            monthIndexEnd = 12;
-        }
-
-        int numOfWeeks = 0;
-        try {
-            Date userStart = new SimpleDateFormat("yyyy MM dd").parse(parseStart[2] + " " + monthIndexStart + " " + parseStart[1]);
-            Date userEnd = new SimpleDateFormat("yyyy MM dd").parse(parseEnd[2] + " " + monthIndexEnd + " " + parseEnd[1]);
-            long diff =  userEnd.getTime() - userStart.getTime();
-            int numOfDays = (int) (diff / (1000 * 60 * 60 * 24));
-            numOfWeeks = (numOfDays / 7);
-
-            Log.i("INFORMATION", "onClick: " + numOfWeeks);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        //TEST
-        intent.putExtra("monthValueTerm", getIntent().getStringExtra("monthValueTerm"));
-        intent.putExtra("termNameTerm", getIntent().getStringExtra("termNameTerm"));
-        intent.putExtra("termStartTerm", getIntent().getStringExtra("termStartTerm"));
-        intent.putExtra("termEndTerm", getIntent().getStringExtra("termEndTerm"));
-        intent.putExtra("termNameAndDateTerm", getIntent().getStringExtra("termNameAndDateTerm"));
-        intent.putExtra("termIdTerm", getIntent().getStringExtra("termIdTerm"));
-
-        intent.putExtra("monthValue", getIntent().getStringExtra("monthValue"));
-        intent.putExtra("termNameAndDate", getIntent().getStringExtra("termNameAndDate"));
-        intent.putExtra("termId", getIntent().getStringExtra("termId"));
-        intent.putExtra("optionalNotes", getIntent().getStringExtra("optionalNotes"));
-        //END OF TEST
-
-        intent.putExtra("monthValueCourse", String.valueOf(numOfWeeks));
-        intent.putExtra("courseTitle", termTitle);
-        intent.putExtra("courseStart", startDate);
-        intent.putExtra("courseEnd", endDate);
-        intent.putExtra("courseNameAndDate", termTitle + "\n" + startDate + " - \n" + endDate);
-        intent.putExtra("courseId", String.valueOf(term_id));
-        startActivity(intent);
     }
 
     public void findRemainingWeeks(String termTitle, String startDate, String endDate, Intent intent, int term_id, String type) {
@@ -581,13 +455,15 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
         int numOfWeeks = 0;
         try {
-            Date userStart = new SimpleDateFormat("yyyy MM dd").parse(parseStart[2] + " " + monthIndexStart + " " + parseStart[1]);
-            Date userEnd = new SimpleDateFormat("yyyy MM dd").parse(parseEnd[2] + " " + monthIndexEnd + " " + parseEnd[1]);
+            @SuppressLint("SimpleDateFormat") Date userStart = new SimpleDateFormat("yyyy MM dd").parse(parseStart[2] + " " + monthIndexStart + " " + parseStart[1]);
+            @SuppressLint("SimpleDateFormat") Date userEnd = new SimpleDateFormat("yyyy MM dd").parse(parseEnd[2] + " " + monthIndexEnd + " " + parseEnd[1]);
+            assert userStart != null;
+            assert userEnd != null;
             long diff =  userEnd.getTime() - userStart.getTime();
             int numOfDays = (int) (diff / (1000 * 60 * 60 * 24));
             numOfWeeks = (numOfDays / 7);
 
-            Log.i("INFORMATION", "onClick: " + numOfWeeks);
+            Log.i(TAG, "onClick: NUMBER OF WEEKS: " + numOfWeeks);
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -5,13 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -20,6 +18,7 @@ import java.util.Objects;
 
 public class AddTermActivity extends AppCompatActivity {
 
+    private static final String TAG = "DEBUG";
     private DatePickerDialog datePickerDialog;
     private DatePickerDialog datePickerDialog2;
     private Button dateButton;
@@ -52,44 +51,27 @@ public class AddTermActivity extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        Button button = (Button) this.findViewById(R.id.addTermButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button button = this.findViewById(R.id.addTermButton);
+        button.setOnClickListener(view -> {
+            EditText termTitle = findViewById(R.id.termTitleText);
+            String termTitleString = termTitle.getText().toString();
 
-            @Override
-            public void onClick(View view) {
-                EditText termTitle = (EditText) findViewById(R.id.termTitleText);
-                String termTitleString = termTitle.getText().toString();
+            Button termStart = dateButton;
+            String termStartString = termStart.getText().toString();
 
-                Button termStart = (Button) findViewById(R.id.datePickerButton);
-                String termStartString = termStart.getText().toString();
+            Button termEnd = dateButton2;
+            String termEndString = termEnd.getText().toString();
 
-                Button termEnd = (Button) findViewById(R.id.datePickerButton2);
-                String termEndString = termEnd.getText().toString();
-
-                StudentDatabase sdb = new StudentDatabase(getApplicationContext());
-                new AddTerm().execute(termTitleString, termStartString, termEndString);
-                Log.i("INFORMATION", "onClick: Term Added to database");
-                startActivity(new Intent(AddTermActivity.this, DashboardActivity.class));
-            }
+            new AddTerm().execute(termTitleString, termStartString, termEndString);
+            Log.i(TAG, "onClick: Term Added to database");
+            startActivity(new Intent(AddTermActivity.this, DashboardActivity.class));
         });
 
-        Button button2 = (Button) this.findViewById(R.id.datePickerButton);
-        button2.setOnClickListener(new View.OnClickListener() {
+        Button button2 = this.findViewById(R.id.datePickerButton);
+        button2.setOnClickListener(this::openDatePicker);
 
-            @Override
-            public void onClick(View view) {
-                openDatePicker(view);
-            }
-        });
-
-        Button button3 = (Button) this.findViewById(R.id.datePickerButton2);
-        button3.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                openDatePicker2(view);
-            }
-        });
+        Button button3 = this.findViewById(R.id.datePickerButton2);
+        button3.setOnClickListener(this::openDatePicker2);
     }
 
     private String getTodaysDate() {
@@ -102,13 +84,10 @@ public class AddTermActivity extends AppCompatActivity {
     }
 
     private void initDatePicker() {
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month += 1;
-                String date = makeDateString(day, month, year);
-                dateButton.setText(date);
-            }
+        DatePickerDialog.OnDateSetListener dateSetListener = (datePicker, year, month, day) -> {
+            month += 1;
+            String date = makeDateString(day, month, year);
+            dateButton.setText(date);
         };
 
         Calendar calender = Calendar.getInstance();
@@ -120,13 +99,10 @@ public class AddTermActivity extends AppCompatActivity {
 
         datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
 
-        DatePickerDialog.OnDateSetListener dateSetListener2 = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month += 1;
-                String date = makeDateString(day, month, year);
-                dateButton2.setText(date);
-            }
+        DatePickerDialog.OnDateSetListener dateSetListener2 = (datePicker, year1, month1, day1) -> {
+            month1 += 1;
+            String date = makeDateString(day1, month1, year1);
+            dateButton2.setText(date);
         };
 
         Calendar calender2 = Calendar.getInstance();

@@ -9,6 +9,7 @@ import android.util.Log;
 
 public class StudentDatabase extends SQLiteOpenHelper {
 
+    private static final String TAG = "DEBUG";
     private static final String DATABASE_NAME = "terms.db";
     private static final int VERSION = 1;
 
@@ -55,7 +56,7 @@ public class StudentDatabase extends SQLiteOpenHelper {
                 TermsTable.COL_TITLE + " text, " +
                 TermsTable.COL_START_DATE + " date, " +
                 TermsTable.COL_END_DATE + " date" + ")");
-        Log.i("INFORMATION", "onCreate: terms table created on local database");
+        Log.i(TAG, "onCreate: terms table created on local database");
 
         db.execSQL("create table " + CoursesTable.COURSE_TABLE + " (" +
                 CoursesTable.COURSE_COL_ID + " integer primary key autoincrement, " +
@@ -68,7 +69,7 @@ public class StudentDatabase extends SQLiteOpenHelper {
                 CoursesTable.COURSE_COL_INS_EMAIL + " email, " +
                 CoursesTable.COURSE_COL_TERM_ID + " integer, " +
                 CoursesTable.COURSE_COL_OPTIONAL_NOTE + " text " + ")");
-        Log.i("INFORMATION", "onCreate:  courses table created on local database");
+        Log.i(TAG, "onCreate:  courses table created on local database");
 
         db.execSQL("create table " + AssignmentsTable.ASSESSMENT_TABLE + " (" +
                 AssignmentsTable.ASSESSMENT_COL_ID + " integer primary key autoincrement, " +
@@ -77,7 +78,7 @@ public class StudentDatabase extends SQLiteOpenHelper {
                 AssignmentsTable.ASSESSMENT_COL_END_DATE + " date, " +
                 AssignmentsTable.ASSESSMENT_COL_TYPE + " text, " +
                 AssignmentsTable.ASSESSMENT_COL_COURSE_ID + " integer " + ")");
-        Log.i("INFORMATION", "onCreate:  assessment table created on local database");
+        Log.i(TAG, "onCreate:  assessment table created on local database");
     }
 
     @Override
@@ -225,13 +226,6 @@ public class StudentDatabase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String sql = "select * from " + CoursesTable.COURSE_TABLE + " where _id = " + term_id;
-        return db.rawQuery(sql, null);
-    }
-
-    public Cursor getCourses(int term_id, String title) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String sql = "select * from " + CoursesTable.COURSE_TABLE + " where term_id = " + term_id + " and title = '" + title + "'";
         return db.rawQuery(sql, null);
     }
 

@@ -1,12 +1,10 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +21,7 @@ import java.util.Objects;
 
 public class AddCourseActivity extends AppCompatActivity {
 
+    private static final String TAG = "DEBUG";
     private DatePickerDialog datePickerDialog;
     private DatePickerDialog datePickerDialog2;
     private Button dateButton;
@@ -55,37 +54,36 @@ public class AddCourseActivity extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        Spinner spinner = findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.course_status, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        Button button = (Button) this.findViewById(R.id.addCourseButton);
+        Button button = this.findViewById(R.id.addCourseButton);
         button.setOnClickListener(view -> {
-            EditText courseTitle = (EditText) findViewById(R.id.courseTitleText);
+            EditText courseTitle = findViewById(R.id.courseTitleText);
             String courseTitleString = courseTitle.getText().toString();
 
             String courseStartString = dateButton.getText().toString();
             String courseEndString = dateButton2.getText().toString();
             String courseProgressString = spinner.getSelectedItem().toString();
 
-            EditText courseInstructorName = (EditText) findViewById(R.id.courseInstructorName);
+            EditText courseInstructorName = findViewById(R.id.courseInstructorName);
             String courseInstructorNameString = courseInstructorName.getText().toString();
 
-            EditText courseInstructorPhone = (EditText) findViewById(R.id.courseInstructorPhone);
+            EditText courseInstructorPhone = findViewById(R.id.courseInstructorPhone);
             String courseInstructorPhoneString = courseInstructorPhone.getText().toString();
 
-            EditText courseInstructorEmail = (EditText) findViewById(R.id.courseInstructorEmail);
+            EditText courseInstructorEmail = findViewById(R.id.courseInstructorEmail);
             String courseInstructorEmailString = courseInstructorEmail.getText().toString();
 
-            EditText courseOptionalNote = (EditText) findViewById(R.id.courseOptionalNoteText);
+            EditText courseOptionalNote = findViewById(R.id.courseOptionalNoteText);
             String courseOptionalNoteString = courseOptionalNote.getText().toString();
 
-            StudentDatabase sdb = new StudentDatabase(getApplicationContext());
             new AddCourse().execute(courseTitleString, courseStartString, courseEndString, courseProgressString, courseInstructorNameString, courseInstructorPhoneString, courseInstructorEmailString, String.valueOf(DashboardActivity.term_id), courseOptionalNoteString);
 
-            Log.i("INFORMATION", "onClick: Course added to database. Term ID: " + DashboardActivity.term_id);
+            Log.i(TAG, "onClick: Course added to database. Term ID: " + DashboardActivity.term_id);
             Intent intent = new Intent(AddCourseActivity.this, TermDetailsActivity.class);
             intent.putExtra("monthValue", getIntent().getStringExtra("monthValueTerm"));
             intent.putExtra("termName", getIntent().getStringExtra("termNameTerm"));
@@ -93,7 +91,7 @@ public class AddCourseActivity extends AppCompatActivity {
             intent.putExtra("termEnd", getIntent().getStringExtra("termEndTerm"));
             intent.putExtra("termNameAndDate", getIntent().getStringExtra("termNameAndDateTerm"));
             intent.putExtra("termId", getIntent().getStringExtra("termIdTerm"));
-            Log.d("DEBUG", "onCreate: " + getIntent().getStringExtra("termIdTerm"));
+            Log.d(TAG, "onCreate: " + getIntent().getStringExtra("termIdTerm"));
             onBackPressed();
             startActivity(intent);
         });
@@ -104,13 +102,12 @@ public class AddCourseActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         // Determine which menu option was chosen
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                //SHARE COURSE NOTES
-                onBackPressed();
-                return true;
+        if (item.getItemId() == android.R.id.home) {//SHARE COURSE NOTES
+            onBackPressed();
+            return true;
         }
-        return true;
+        Log.d(TAG, "onOptionsItemSelected: error");
+        return false;
     }
 
     private String getTodaysDate() {

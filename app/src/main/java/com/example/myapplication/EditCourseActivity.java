@@ -2,7 +2,6 @@ package com.example.myapplication;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -23,6 +21,7 @@ import java.util.Objects;
 
 public class EditCourseActivity extends AppCompatActivity {
 
+    private static final String TAG = "DEBUG";
     private DatePickerDialog datePickerDialog;
     private DatePickerDialog datePickerDialog2;
     private Button dateButton;
@@ -48,8 +47,8 @@ public class EditCourseActivity extends AppCompatActivity {
 
         initDatePicker();
 
-        Log.i("INFO", "onCreate: course id - " + getIntent().getStringExtra("termId"));
-        EditText edit = (EditText) findViewById(R.id.courseTitleTextEdit);
+        Log.i(TAG, "onCreate: course id - " + getIntent().getStringExtra("termId"));
+        EditText edit = findViewById(R.id.courseTitleTextEdit);
         edit.setText(getIntent().getStringExtra("termName"));
 
         dateButton = findViewById(R.id.datePickerButton);
@@ -60,7 +59,7 @@ public class EditCourseActivity extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        Spinner spinner = findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.course_status, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -70,102 +69,66 @@ public class EditCourseActivity extends AppCompatActivity {
         int value = Arrays.asList((getResources().getStringArray(R.array.course_status))).indexOf(progress);
         spinner.setSelection(value);
 
-        EditText edit2 = (EditText) findViewById(R.id.courseInstructorNameEdit);
+        EditText edit2 = findViewById(R.id.courseInstructorNameEdit);
         edit2.setText(getIntent().getStringExtra("termInstructorName"));
 
-        EditText edit3 = (EditText) findViewById(R.id.courseInstructorPhoneEdit);
+        EditText edit3 = findViewById(R.id.courseInstructorPhoneEdit);
         edit3.setText(getIntent().getStringExtra("termInstructorPhone"));
 
-        EditText edit4 = (EditText) findViewById(R.id.courseInstructorEmailEdit);
+        EditText edit4 = findViewById(R.id.courseInstructorEmailEdit);
         edit4.setText(getIntent().getStringExtra("termInstructorEmail"));
 
-        EditText edit5 = (EditText) findViewById(R.id.courseOptionalNoteTextEdit);
+        EditText edit5 = findViewById(R.id.courseOptionalNoteTextEdit);
         edit5.setText(getIntent().getStringExtra("optionalNotes"));
 
-        Button button = (Button) this.findViewById(R.id.editCourseButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button button = this.findViewById(R.id.editCourseButton);
+        button.setOnClickListener(view -> {
+            String courseTitleString = edit.getText().toString();
 
-            @Override
-            public void onClick(View view) {
-                EditText courseTitle = (EditText) findViewById(R.id.courseTitleTextEdit);
-                String courseTitleString = courseTitle.getText().toString();
+            Button termStart = dateButton;
+            String courseStartString = termStart.getText().toString();
 
-                Button termStart = (Button) findViewById(R.id.datePickerButton);
-                String courseStartString = termStart.getText().toString();
+            Button termEnd = dateButton2;
+            String courseEndString = termEnd.getText().toString();
 
-                Button termEnd = (Button) findViewById(R.id.datePickerButton2);
-                String courseEndString = termEnd.getText().toString();
+            String courseProgressString = spinner.getSelectedItem().toString();
 
-                Spinner courseProgress = (Spinner) findViewById(R.id.spinner);
-                String courseProgressString = courseProgress.getSelectedItem().toString();
+            String courseInstructorNameString = edit2.getText().toString();
 
-                EditText courseInstructorName = (EditText) findViewById(R.id.courseInstructorNameEdit);
-                String courseInstructorNameString = courseInstructorName.getText().toString();
+            String courseInstructorPhoneString = edit3.getText().toString();
 
-                EditText courseInstructorPhone = (EditText) findViewById(R.id.courseInstructorPhoneEdit);
-                String courseInstructorPhoneString = courseInstructorPhone.getText().toString();
+            String courseInstructorEmailString = edit4.getText().toString();
 
-                EditText courseInstructorEmail = (EditText) findViewById(R.id.courseInstructorEmailEdit);
-                String courseInstructorEmailString = courseInstructorEmail.getText().toString();
+            String courseOptionalNoteString = edit5.getText().toString();
 
-                EditText courseOptionalNote = (EditText) findViewById(R.id.courseOptionalNoteTextEdit);
-                String courseOptionalNoteString = courseOptionalNote.getText().toString();
-
-                StudentDatabase sdb = new StudentDatabase(getApplicationContext());
-                new EditCourse().execute(getIntent().getStringExtra("termId"), courseTitleString, courseStartString, courseEndString, courseProgressString, courseInstructorNameString, courseInstructorPhoneString, courseInstructorEmailString, courseOptionalNoteString);
-                Log.i("INFORMATION", "onClick: Course added to database. Term ID: " + DashboardActivity.term_id);
-                onBackPressed();
-                //startActivity(new Intent(EditCourseActivity.this, DashboardActivity.class));
-            }
+            new EditCourse().execute(getIntent().getStringExtra("termId"), courseTitleString, courseStartString, courseEndString, courseProgressString, courseInstructorNameString, courseInstructorPhoneString, courseInstructorEmailString, courseOptionalNoteString);
+            Log.i(TAG, "onClick: Course added to database. Term ID: " + DashboardActivity.term_id);
+            onBackPressed();
+            //startActivity(new Intent(EditCourseActivity.this, DashboardActivity.class));
         });
 
-        Button button2 = (Button) this.findViewById(R.id.datePickerButton);
-        button2.setOnClickListener(new View.OnClickListener() {
+        Button button2 = this.findViewById(R.id.datePickerButton);
+        button2.setOnClickListener(this::openDatePicker);
 
-            @Override
-            public void onClick(View view) {
-                openDatePicker(view);
-            }
-        });
-
-        Button button3 = (Button) this.findViewById(R.id.datePickerButton2);
-        button3.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                openDatePicker2(view);
-            }
-        });
+        Button button3 = this.findViewById(R.id.datePickerButton2);
+        button3.setOnClickListener(this::openDatePicker2);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         // Determine which menu option was chosen
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                //SHARE COURSE NOTES
-                onBackPressed();
-                return true;
+        if (item.getItemId() == android.R.id.home) {//SHARE COURSE NOTES
+            onBackPressed();
+            return true;
         }
+        Log.d(TAG, "onOptionsItemSelected: error");
         return true;
     }
 
-    private String getTodaysDate() {
-        Calendar calender = Calendar.getInstance();
-        int year = calender.get(Calendar.YEAR);
-        int month = calender.get(Calendar.MONTH);
-        month += 1;
-        int day = calender.get(Calendar.DAY_OF_MONTH);
-        return makeDateString(day, month, year);
-    }
-
     private void initDatePicker() {
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month += 1;
-                String date = makeDateString(day, month, year);
-                dateButton.setText(date);
-            }
+        DatePickerDialog.OnDateSetListener dateSetListener = (datePicker, year, month, day) -> {
+            month += 1;
+            String date = makeDateString(day, month, year);
+            dateButton.setText(date);
         };
 
         Calendar calender = Calendar.getInstance();
@@ -177,13 +140,10 @@ public class EditCourseActivity extends AppCompatActivity {
 
         datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
 
-        DatePickerDialog.OnDateSetListener dateSetListener2 = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month += 1;
-                String date = makeDateString(day, month, year);
-                dateButton2.setText(date);
-            }
+        DatePickerDialog.OnDateSetListener dateSetListener2 = (datePicker, year1, month1, day1) -> {
+            month1 += 1;
+            String date = makeDateString(day1, month1, year1);
+            dateButton2.setText(date);
         };
 
         Calendar calender2 = Calendar.getInstance();

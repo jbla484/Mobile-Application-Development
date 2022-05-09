@@ -10,10 +10,12 @@ import android.util.Log;
 
 public class Alarm extends BroadcastReceiver
 {
+    private static final String TAG = "DEBUG";
+
     @Override
     public void onReceive(Context context, Intent intent)
     {
-        Log.d("DEBUG", "onReceive: alarm");
+        Log.d(TAG, "onReceive: alarm");
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "myapp::partial_wake_lock");
         wl.acquire(10*60*1000L);
@@ -22,7 +24,7 @@ public class Alarm extends BroadcastReceiver
 
     public void setAlarm(Context context)
     {
-        Log.d("DEBUG", "setAlarm: alarm");
+        Log.d(TAG, "setAlarm: alarm");
         AlarmManager am =( AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent("example.START_ALARM");
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, PendingIntent.FLAG_IMMUTABLE);

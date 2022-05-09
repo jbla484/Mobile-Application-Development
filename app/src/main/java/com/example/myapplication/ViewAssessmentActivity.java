@@ -16,24 +16,23 @@ import java.util.Objects;
 
 public class ViewAssessmentActivity extends AppCompatActivity {
 
-    private TextView dateButton;
-    private TextView dateButton2;
+    private static final String TAG = "DEBUG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_assessment);
 
-        TextView ed  = (TextView) findViewById(R.id.assessmentTitleTextView);
+        TextView ed  = findViewById(R.id.assessmentTitleTextView);
         ed.setText(getIntent().getStringExtra("courseTitle"));
 
-        dateButton = findViewById(R.id.datePickerString);
+        TextView dateButton = findViewById(R.id.datePickerString);
         dateButton.setText(getIntent().getStringExtra("courseStart"));
 
-        dateButton2 = findViewById(R.id.datePickerString2);
+        TextView dateButton2 = findViewById(R.id.datePickerString2);
         dateButton2.setText(getIntent().getStringExtra("courseEnd"));
 
-        TextView ed2  = (TextView) findViewById(R.id.assessmentStatusTextView);
+        TextView ed2  = findViewById(R.id.assessmentStatusTextView);
         ed2.setText(getIntent().getStringExtra("courseType"));
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -70,7 +69,7 @@ public class ViewAssessmentActivity extends AppCompatActivity {
             case R.id.action_one_assessments:
                 //EDIT ASSESSMENT ACTIVITY
 
-                Log.i("INFO", "onOptionsItemSelected:");
+                Log.i(TAG, "onOptionsItemSelected:");
                 StudentDatabase sdb1 = new StudentDatabase(getApplicationContext());
                 Cursor c1 = sdb1.getAssessments(Integer.parseInt(getIntent().getStringExtra("courseId")));
 
@@ -109,11 +108,9 @@ public class ViewAssessmentActivity extends AppCompatActivity {
 
             case R.id.action_two_assessments:
                 //DELETE ASSESSMENT ACTIVITY
-                Log.i("INFO", "onOptionsItemSelected: " + getIntent().getIntExtra("courseId", 0));
-                StudentDatabase sdb = new StudentDatabase(getApplicationContext());
+                Log.i(TAG, "onOptionsItemSelected: " + getIntent().getIntExtra("courseId", 0));
 
                 new DeleteAssessment().execute(Integer.parseInt(getIntent().getStringExtra("courseId")));
-
                 Intent intent = new Intent(ViewAssessmentActivity.this, CourseDetailsActivity.class);
                 intent.putExtra("monthValue", getIntent().getStringExtra("monthValue"));
                 intent.putExtra("termNameAndDate", getIntent().getStringExtra("termNameAndDate"));
@@ -127,12 +124,10 @@ public class ViewAssessmentActivity extends AppCompatActivity {
                 intent.putExtra("termNameAndDateTerm", getIntent().getStringExtra("termNameAndDateTerm"));
                 intent.putExtra("termIdTerm", getIntent().getStringExtra("termIdTerm"));
                 startActivity(intent);
-
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }
