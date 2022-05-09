@@ -66,6 +66,7 @@ public class NotificationService extends Service {
     public void onDestroy() {
         Log.d(TAG, "onDestroy: notification");
         super.onDestroy();
+        stoptimertask();
 
         Intent broadcastIntent = new Intent();
         broadcastIntent.setAction("restartservice");
@@ -73,9 +74,11 @@ public class NotificationService extends Service {
         this.sendBroadcast(broadcastIntent);
     }
 
+    private Timer timer;
+    private TimerTask timerTask;
     public void startTimer() {
-        Timer timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
+        timer = new Timer();
+        timerTask = new TimerTask() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             public void run() {
 
@@ -337,6 +340,13 @@ public class NotificationService extends Service {
         };
         // Wait 4 hours to receive the notification.
         timer.schedule(timerTask, 14400000, 43200000);
+    }
+
+    public void stoptimertask() {
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
     }
 
     private int getMonthIndex(String month) {

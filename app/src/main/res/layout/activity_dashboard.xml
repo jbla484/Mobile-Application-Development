@@ -15,9 +15,8 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="17dp"
-            android:layout_marginRight="20dp"
             android:clickable="true"
-            android:contentDescription="FAB"
+            android:contentDescription="@string/fab_button"
             android:focusable="true"
             android:layout_gravity="bottom|end"
             app:srcCompat="@android:drawable/ic_input_add" />
@@ -49,19 +48,17 @@
                             android:id="@+id/button_first"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="13dp"
+                            android:layout_marginEnd="13dp"
                             android:layout_weight="1"
-                            android:padding="35dp"
-                            android:text="Term 1" />
+                            android:padding="35dp" />
 
                         <Button
                             android:id="@+id/button_second"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="13dp"
+                            android:layout_marginStart="13dp"
                             android:layout_weight="1"
-                            android:padding="35dp"
-                            android:text="Term 2" />
+                            android:padding="35dp" />
                     </TableRow>
 
                     <TableRow
@@ -76,19 +73,17 @@
                             android:id="@+id/button_third"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="13dp"
+                            android:layout_marginEnd="13dp"
                             android:layout_weight="1"
-                            android:padding="35dp"
-                            android:text="Term 3" />
+                            android:padding="35dp" />
 
                         <Button
                             android:id="@+id/button_fourth"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="13dp"
+                            android:layout_marginStart="13dp"
                             android:layout_weight="1"
-                            android:padding="35dp"
-                            android:text="Term 4" />
+                            android:padding="35dp" />
                     </TableRow>
 
                     <TableRow
@@ -103,19 +98,17 @@
                             android:id="@+id/button_fifth"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="13dp"
+                            android:layout_marginEnd="13dp"
                             android:layout_weight="1"
-                            android:padding="35dp"
-                            android:text="Term 5" />
+                            android:padding="35dp" />
 
                         <Button
                             android:id="@+id/button_sixth"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="13dp"
+                            android:layout_marginStart="13dp"
                             android:layout_weight="1"
-                            android:padding="35dp"
-                            android:text="Term 6" />
+                            android:padding="35dp" />
 
                     </TableRow>
 
@@ -131,19 +124,17 @@
                             android:id="@+id/button_seventh"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="13dp"
+                            android:layout_marginEnd="13dp"
                             android:layout_weight="1"
-                            android:padding="35dp"
-                            android:text="Term 1" />
+                            android:padding="35dp" />
 
                         <Button
                             android:id="@+id/button_eighth"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="13dp"
+                            android:layout_marginStart="13dp"
                             android:layout_weight="1"
-                            android:padding="35dp"
-                            android:text="Term 2" />
+                            android:padding="35dp" />
                     </TableRow>
 
                     <TableRow
@@ -158,19 +149,17 @@
                             android:id="@+id/button_ninth"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="13dp"
+                            android:layout_marginEnd="13dp"
                             android:layout_weight="1"
-                            android:padding="35dp"
-                            android:text="Term 1" />
+                            android:padding="35dp" />
 
                         <Button
                             android:id="@+id/button_tenth"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="13dp"
+                            android:layout_marginStart="13dp"
                             android:layout_weight="1"
-                            android:padding="35dp"
-                            android:text="Term 2" />
+                            android:padding="35dp" />
                     </TableRow>
                 </TableLayout>
             </RelativeLayout>

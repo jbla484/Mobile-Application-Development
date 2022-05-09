@@ -89,7 +89,7 @@
 
         <service
             android:name="com.example.myapplication.NotificationService"
-            android:label="@string/app_name"
+            android:label="@string/welcome"
             android:process=":update_process"
             android:exported="false"
             android:enabled="true">

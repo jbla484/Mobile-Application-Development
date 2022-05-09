@@ -1,5 +1,29 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">My Application</string>
+    <string name="welcome">Welcome to James\' student progress tracking application.</string>
+    <string name="welcome_desc">This application is in it\'s first version, so if you find any bugs or have any questions or concerns please contact me at Jbla484@wgu.edu.</string>
+    <string name="welcome_button_text">Dive In</string>
+    <string name="fab_button">FAB</string>
+    <string name="term_title">Term Title:</string>
+    <string name="term_start_date">Start Date:</string>
+    <string name="term_date_text">MAY 01 2022</string>
+    <string name="term_end_date">End Date:</string>
+    <string name="term_button_text">Add Term</string>
+    <string name="term_button_text_edit">Edit Term</string>
+    <string name="term_remaining_weeks">Remaining \nWeeks</string>
+    <string name="course_title">Course Title:</string>
+    <string name="course_status">Status:</string>
+    <string name="course_instructor_info">Instructor Information:</string>
+    <string name="course_instructor_name">Full Name:</string>
+    <string name="course_instructor_phone">Phone Number:</string>
+    <string name="course_instructor_email">Email Address:</string>
+    <string name="course_instructor_notes">Optional Note(s):</string>
+    <string name="course_button_text">Add Course</string>
+    <string name="course_button_text_edit">Edit Course</string>
+    <string name="assessment_title">Assessment Title:</string>
+    <string name="assessment_title2">Title:</string>
+    <string name="assessment_type">Type:</string>
+    <string name="assessment_button_text">Add Assessment</string>
+    <string name="assessment_button_text_edit">Edit Assessment</string>
     <string-array name="course_status">
         <item>In Progress</item>
         <item>Completed</item>
