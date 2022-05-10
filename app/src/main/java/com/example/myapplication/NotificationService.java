@@ -69,7 +69,7 @@ public class NotificationService extends Service {
     public void onDestroy() {
         Log.d(TAG, "onDestroy: notification");
         super.onDestroy();
-        stoptimertask();
+        stopTimerTask();
 
         Intent broadcastIntent = new Intent();
         broadcastIntent.setAction("restartservice");
@@ -346,7 +346,7 @@ public class NotificationService extends Service {
         timer.schedule(timerTask, 14400000, 43200000);
     }
 
-    public void stoptimertask() {
+    public void stopTimerTask() {
         if (timer != null) {
             timer.cancel();
             timer = null;

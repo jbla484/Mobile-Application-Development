@@ -78,7 +78,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:process=":remote" android:name=".Alarm"
+        <receiver android:name=".Alarm"
             android:exported="false">
             <intent-filter>
                 <action android:name="example.START_ALARM" >
@@ -90,7 +90,6 @@
         <service
             android:name="com.example.myapplication.NotificationService"
             android:label="@string/welcome"
-            android:process=":update_process"
             android:exported="false"
             android:enabled="true">
             <intent-filter>

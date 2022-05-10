@@ -506,6 +506,13 @@ public class TermDetailsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Determine which menu option was chosen
         switch (item.getItemId()) {
+            case android.R.id.home:
+                //BACK BUTTON
+                Intent intent2 = new Intent(TermDetailsActivity.this, DashboardActivity.class);
+                startActivity(intent2);
+
+                return true;
+
             case R.id.action_one:
                 //EDIT TERM ACTIVITY
                 StudentDatabase sdb1 = new StudentDatabase(getApplicationContext());

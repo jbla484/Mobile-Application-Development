@@ -62,8 +62,40 @@ public class ViewAssessmentActivity extends AppCompatActivity {
         // Determine which menu option was chosen
         switch (item.getItemId()) {
             case android.R.id.home:
-                //SHARE COURSE NOTES
-                onBackPressed();
+                //BACK BUTTON
+                StudentDatabase sdb2 = new StudentDatabase(getApplicationContext());
+                Cursor c2 = sdb2.getAssessments(Integer.parseInt(getIntent().getStringExtra("courseId")));
+
+                if (c2.moveToNext()) {
+                    Intent intent = new Intent(ViewAssessmentActivity.this, CourseDetailsActivity.class);
+
+                    intent.putExtra("monthValueTerm", getIntent().getStringExtra("monthValueTerm"));
+                    intent.putExtra("termNameTerm", getIntent().getStringExtra("termNameTerm"));
+                    intent.putExtra("termStartTerm", getIntent().getStringExtra("termStartTerm"));
+                    intent.putExtra("termEndTerm", getIntent().getStringExtra("termEndTerm"));
+                    intent.putExtra("termNameAndDateTerm", getIntent().getStringExtra("termNameAndDateTerm"));
+                    intent.putExtra("termIdTerm", getIntent().getStringExtra("termIdTerm"));
+
+                    intent.putExtra("monthValue", getIntent().getStringExtra("monthValue"));
+                    intent.putExtra("termNameAndDate", getIntent().getStringExtra("termNameAndDate"));
+                    intent.putExtra("termId", getIntent().getStringExtra("termId"));
+                    intent.putExtra("optionalNotes", getIntent().getStringExtra("optionalNotes"));
+
+                    intent.putExtra("monthValueCourse", getIntent().getStringExtra("monthValueCourse"));
+                    intent.putExtra("courseTitle", getIntent().getStringExtra("courseTitle"));
+                    intent.putExtra("courseStart", getIntent().getStringExtra("courseStart"));
+                    intent.putExtra("courseEnd", getIntent().getStringExtra("courseEnd"));
+                    intent.putExtra("courseType", getIntent().getStringExtra("courseType"));
+                    intent.putExtra("courseNameAndDate", getIntent().getStringExtra("courseNameAndDate"));
+                    intent.putExtra("courseId", getIntent().getStringExtra("courseId"));
+
+                    intent.putExtra("assessmentId", getIntent().getStringExtra("courseId"));
+                    intent.putExtra("assessmentTitle", c2.getString(1));
+                    intent.putExtra("assessmentStart", c2.getString(2));
+                    intent.putExtra("assessmentEnd", c2.getString(3));
+                    intent.putExtra("assessmentType", c2.getString(4));
+                    startActivity(intent);
+                }
                 return true;
 
             case R.id.action_one_assessments:

@@ -413,7 +413,23 @@ public class CourseDetailsActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 //SHARE COURSE NOTES
-                onBackPressed();
+                StudentDatabase sdb2 = new StudentDatabase(getApplicationContext());
+                Cursor c2 = sdb2.getCourses3(Integer.parseInt(getIntent().getStringExtra("termId")));
+
+                if (c2.moveToNext()) {
+                    Intent intent = new Intent(CourseDetailsActivity.this, TermDetailsActivity.class);
+                    intent.putExtra("termId", getIntent().getStringExtra("termId"));
+                    intent.putExtra("termName", c2.getString(1));
+                    intent.putExtra("termStart", c2.getString(2));
+                    intent.putExtra("termEnd", c2.getString(3));
+                    intent.putExtra("termProgress", c2.getString(4));
+                    intent.putExtra("termInstructorName", c2.getString(5));
+                    intent.putExtra("termInstructorPhone", c2.getString(6));
+                    intent.putExtra("termInstructorEmail", c2.getString(7));
+                    intent.putExtra("optionalNotes", c2.getString(9));
+                    Log.i(TAG, "onOptionsItemSelected:" + getIntent().getStringExtra("termId"));
+                    startActivity(intent);
+                }
                 return true;
 
             case R.id.action_one_courses:
