@@ -412,7 +412,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         // Determine which menu option was chosen
         switch (item.getItemId()) {
             case android.R.id.home:
-                //SHARE COURSE NOTES
+                //BACK BUTTON
                 StudentDatabase sdb2 = new StudentDatabase(getApplicationContext());
                 Cursor c2 = sdb2.getCourses3(Integer.parseInt(getIntent().getStringExtra("termId")));
 
@@ -423,10 +423,8 @@ public class CourseDetailsActivity extends AppCompatActivity {
                     intent.putExtra("termStart", c2.getString(2));
                     intent.putExtra("termEnd", c2.getString(3));
                     intent.putExtra("termProgress", c2.getString(4));
-                    intent.putExtra("termInstructorName", c2.getString(5));
-                    intent.putExtra("termInstructorPhone", c2.getString(6));
-                    intent.putExtra("termInstructorEmail", c2.getString(7));
-                    intent.putExtra("optionalNotes", c2.getString(9));
+                    intent.putExtra("termNameAndDate", getIntent().getStringExtra("termNameAndDateTerm"));
+                    intent.putExtra("monthValue", getIntent().getStringExtra("monthValueTerm"));
                     Log.i(TAG, "onOptionsItemSelected:" + getIntent().getStringExtra("termId"));
                     startActivity(intent);
                 }
