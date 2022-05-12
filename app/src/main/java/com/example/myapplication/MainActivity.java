@@ -14,7 +14,6 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "DEBUG";
-    public static Intent mServiceIntent;
     public static int numAlert;
 
     @Override
@@ -22,8 +21,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mServiceIntent = new Intent(this, NotificationService.class);
 
         Button button = this.findViewById(R.id.button);
 
