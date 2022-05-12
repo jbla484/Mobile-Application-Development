@@ -54,6 +54,7 @@ public class TermDetailsActivity extends AppCompatActivity {
         Cursor c = null;
         try {
             termId = Integer.parseInt(getIntent().getStringExtra("termId"));
+            Log.d(TAG, "onCreate: term id " + termId);
             c = sdb.getCourses2(termId);
         } catch (Exception e) {
             Log.i(TAG, "ERROR onCreate: s == null");
@@ -288,7 +289,6 @@ public class TermDetailsActivity extends AppCompatActivity {
         btn8.setVisibility(View.INVISIBLE);
         btn9.setVisibility(View.INVISIBLE);
 
-
         assert c != null;
         if (c.getCount() >= -1) {
             int i = 0;
@@ -464,9 +464,9 @@ public class TermDetailsActivity extends AppCompatActivity {
         intent.putExtra("optionalNotes", optionalNotes);
 
         //TEST
-        intent.putExtra("TermStart", startDate);
-        intent.putExtra("TermEnd", endDate);
-        intent.putExtra("TermTitle", termTitle);
+        intent.putExtra("courseStartCopy", startDate);
+        intent.putExtra("courseEndCopy", endDate);
+        intent.putExtra("courseTitleCopy", termTitle);
 
         startActivity(intent);
     }

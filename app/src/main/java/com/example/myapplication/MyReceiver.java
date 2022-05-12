@@ -31,9 +31,9 @@ public class MyReceiver extends BroadcastReceiver {
         boolean startFound = false;
         boolean endFound = false;
 
-        String title = intent.getStringExtra("courseTitle");
-        String start = intent.getStringExtra("courseStart");
-        String end = intent.getStringExtra("courseEnd");
+        String title = intent.getStringExtra("courseTitleCopy");
+        String start = intent.getStringExtra("courseStartCopy");
+        String end = intent.getStringExtra("courseEndCopy");
 
         Log.i(TAG, "onPostExecute: Course title: " + title);
         Log.i(TAG, "onPostExecute: Course start: " + start);

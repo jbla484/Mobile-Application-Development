@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
@@ -26,6 +27,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class CourseDetailsActivity extends AppCompatActivity {
@@ -308,6 +310,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         btn9.setVisibility(View.INVISIBLE);
 
         assert c != null;
+        Log.d(TAG, "onCreate: c count " + c.getCount());
         if (c.getCount() >= -1) {
             int i = 0;
             while (c.moveToNext()) {
@@ -421,14 +424,14 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
                 if (c2.moveToNext()) {
                     Intent intent = new Intent(CourseDetailsActivity.this, TermDetailsActivity.class);
-                    intent.putExtra("termId", getIntent().getStringExtra("termId"));
+                    intent.putExtra("termId", getIntent().getStringExtra("termIdTerm"));
                     intent.putExtra("termName", c2.getString(1));
                     intent.putExtra("termStart", c2.getString(2));
                     intent.putExtra("termEnd", c2.getString(3));
                     intent.putExtra("termProgress", c2.getString(4));
                     intent.putExtra("termNameAndDate", getIntent().getStringExtra("termNameAndDateTerm"));
                     intent.putExtra("monthValue", getIntent().getStringExtra("monthValueTerm"));
-                    Log.i(TAG, "onOptionsItemSelected:" + getIntent().getStringExtra("termId"));
+                    Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("termId"));
                     startActivity(intent);
                 }
                 return true;
@@ -438,19 +441,22 @@ public class CourseDetailsActivity extends AppCompatActivity {
                 Log.i(TAG, "onOptionsItemSelected: ");
                 Toast.makeText(getApplicationContext(), "Course Alerts Set", Toast.LENGTH_SHORT).show();
 
-                Long trigger = 4534L;
                 Intent i = new Intent(CourseDetailsActivity.this, MyReceiver.class);
 
-                i.putExtra("courseTitle", getIntent().getStringExtra("TermTitle"));
-                Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("TermTitle"));
-                i.putExtra("courseStart", getIntent().getStringExtra("TermStart"));
-                Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("TermStart"));
-                i.putExtra("courseEnd", getIntent().getStringExtra("TermEnd"));
-                Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("TermEnd"));
+                i.putExtra("courseTitleCopy", getIntent().getStringExtra("courseTitleCopy"));
+                Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("courseTitleCopy"));
+                i.putExtra("courseStartCopy", getIntent().getStringExtra("courseStartCopy"));
+                Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("courseStartCopy"));
+                i.putExtra("courseEndCopy", getIntent().getStringExtra("courseEndCopy"));
+                Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("courseEndCopy"));
 
-                PendingIntent sender = PendingIntent.getBroadcast(CourseDetailsActivity.this, MainActivity.numAlert++, i,PendingIntent.FLAG_MUTABLE);
+                PendingIntent sender = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                    sender = PendingIntent.getBroadcast(CourseDetailsActivity.this, MainActivity.numAlert++, i, PendingIntent.FLAG_IMMUTABLE);
+                }
                 AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);
+                // INTERVAL IS 60000 TO SHOW EVALUATOR THAT NOTIFICATIONS WORK.
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 60000, sender);
 
                 return true;
 
