@@ -24,18 +24,21 @@
     <string name="assessment_type">Type:</string>
     <string name="assessment_button_text">Add Assessment</string>
     <string name="assessment_button_text_edit">Edit Assessment</string>
+
     <string-array name="course_status">
         <item>In Progress</item>
         <item>Completed</item>
         <item>Dropped</item>
         <item>Plan To Take</item>
     </string-array>
+
     <string-array name="assessment_type">
         <item>Performance</item>
         <item>Objective</item>
     </string-array>
-    <item name="channel_name" type="string">James\' Channel</item>
-    <item name="channel_description" type="string">Description of James\' Channel</item>
+
+    <item name="channel_name" type="string">my_channel</item>
+    <item name="channel_description" type="string">my_channel_description</item>
 
     // Themes
     <style name="AppLight" parent="Theme.MaterialComponents.DayNight.DarkActionBar">

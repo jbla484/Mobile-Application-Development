@@ -462,6 +462,12 @@ public class TermDetailsActivity extends AppCompatActivity {
         intent.putExtra("termNameAndDate", termTitle + "\n" + startDate + " - \n" + endDate);
         intent.putExtra("termId", String.valueOf(term_id));
         intent.putExtra("optionalNotes", optionalNotes);
+
+        //TEST
+        intent.putExtra("TermStart", startDate);
+        intent.putExtra("TermEnd", endDate);
+        intent.putExtra("TermTitle", termTitle);
+
         startActivity(intent);
     }
 

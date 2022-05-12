@@ -1,6 +1,9 @@
 package com.example.myapplication;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -428,6 +431,27 @@ public class CourseDetailsActivity extends AppCompatActivity {
                     Log.i(TAG, "onOptionsItemSelected:" + getIntent().getStringExtra("termId"));
                     startActivity(intent);
                 }
+                return true;
+
+            case R.id.action_zero_courses:
+                //DELETE COURSE ACTIVITY
+                Log.i(TAG, "onOptionsItemSelected: ");
+                Toast.makeText(getApplicationContext(), "Course Alerts Set", Toast.LENGTH_SHORT).show();
+
+                Long trigger = 4534L;
+                Intent i = new Intent(CourseDetailsActivity.this, MyReceiver.class);
+
+                i.putExtra("courseTitle", getIntent().getStringExtra("TermTitle"));
+                Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("TermTitle"));
+                i.putExtra("courseStart", getIntent().getStringExtra("TermStart"));
+                Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("TermStart"));
+                i.putExtra("courseEnd", getIntent().getStringExtra("TermEnd"));
+                Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("TermEnd"));
+
+                PendingIntent sender = PendingIntent.getBroadcast(CourseDetailsActivity.this, MainActivity.numAlert++, i,PendingIntent.FLAG_MUTABLE);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);
+
                 return true;
 
             case R.id.action_one_courses:

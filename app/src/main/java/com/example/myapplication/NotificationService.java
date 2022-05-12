@@ -31,9 +31,6 @@ public class NotificationService extends Service {
     private static final String TAG = "DEBUG";
     public int counter=0;
 
-    private final Alarm alarm = new Alarm();
-    private final ArrayList<Alarm> ALARMS = new ArrayList<>();
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -55,10 +52,6 @@ public class NotificationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-        alarm.setAlarm(this);
-        ALARMS.add(alarm);
-
         Log.d(TAG, "onStartCommand: notification");
         super.onStartCommand(intent, flags, startId);
         startTimer();
@@ -70,11 +63,6 @@ public class NotificationService extends Service {
         Log.d(TAG, "onDestroy: notification");
         super.onDestroy();
         stopTimerTask();
-
-        Intent broadcastIntent = new Intent();
-        broadcastIntent.setAction("restartservice");
-        broadcastIntent.setClass(this, Restarter.class);
-        this.sendBroadcast(broadcastIntent);
     }
 
     private Timer timer;
@@ -177,7 +165,7 @@ public class NotificationService extends Service {
 
                     String body = "You have an upcoming course starting within the next 7 days.";
 
-                    Intent closingIntent = new Intent(NotificationService.this, ClosingBackGroundService.class);
+                    Intent closingIntent = new Intent(NotificationService.this, MainActivity.class);
                     PendingIntent actionIntent = PendingIntent.getBroadcast(NotificationService.this, 0, closingIntent, PendingIntent.FLAG_IMMUTABLE);
 
                     NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(NotificationService.this, "example.permanence");
@@ -204,7 +192,7 @@ public class NotificationService extends Service {
 
                     String body = "You have an course ending within the next 7 days.";
 
-                    Intent closingIntent = new Intent(NotificationService.this, ClosingBackGroundService.class);
+                    Intent closingIntent = new Intent(NotificationService.this, MainActivity.class);
                     PendingIntent actionIntent = PendingIntent.getBroadcast(NotificationService.this, 0, closingIntent, PendingIntent.FLAG_IMMUTABLE);
 
                     NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(NotificationService.this, "example.permanence");
@@ -295,7 +283,7 @@ public class NotificationService extends Service {
 
                     String body = "You have an upcoming assessment starting within the next 7 days.";
 
-                    Intent closingIntent = new Intent(NotificationService.this, ClosingBackGroundService.class);
+                    Intent closingIntent = new Intent(NotificationService.this, MainActivity.class);
                     PendingIntent actionIntent = PendingIntent.getBroadcast(NotificationService.this, 0, closingIntent, PendingIntent.FLAG_IMMUTABLE);
 
                     NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(NotificationService.this, "example.permanence");
@@ -321,7 +309,7 @@ public class NotificationService extends Service {
 
                     String body = "You have an assessment ending within the next 7 days.";
 
-                    Intent closingIntent = new Intent(NotificationService.this, ClosingBackGroundService.class);
+                    Intent closingIntent = new Intent(NotificationService.this, MainActivity.class);
                     PendingIntent actionIntent = PendingIntent.getBroadcast(NotificationService.this, 0, closingIntent, PendingIntent.FLAG_IMMUTABLE);
 
                     NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(NotificationService.this, "example.permanence");
@@ -343,7 +331,8 @@ public class NotificationService extends Service {
             }
         };
         // Wait 4 hours to receive the notification.
-        timer.schedule(timerTask, 14400000, 43200000);
+        timer.schedule(timerTask, 1000, 1000);
+        //timer.schedule(timerTask, 14400000, 43200000);
     }
 
     public void stopTimerTask() {
