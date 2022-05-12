@@ -19,7 +19,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class MyReceiver extends BroadcastReceiver {
+public class MyReceiverCourses extends BroadcastReceiver {
     String channel_id = "test";
     static int notification_id;
     private static final String TAG = "DEBUG";
@@ -56,7 +56,7 @@ public class MyReceiver extends BroadcastReceiver {
         }
 
         Log.i(TAG, "onPostExecute: Today's date: " + dateNow);
-        Log.i(TAG, "\n\nChecking Courses and Assessments:\n\n");
+        Log.i(TAG, "\n\nChecking Courses:\n\n");
 
         // Course start and end dates
         String[] dateParts3 = start.split(" ");

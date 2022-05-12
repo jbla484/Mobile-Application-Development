@@ -1,5 +1,8 @@
 package com.example.myapplication;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -96,6 +99,30 @@ public class ViewAssessmentActivity extends AppCompatActivity {
                     intent.putExtra("assessmentType", c2.getString(4));
                     startActivity(intent);
                 }
+                return true;
+
+            case R.id.action_zero_assessments:
+                // SET ALERTS
+                Log.i(TAG, "onOptionsItemSelected: ");
+                Toast.makeText(getApplicationContext(), "Assessment Alerts Set", Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent(ViewAssessmentActivity.this, MyReceiverAssessments.class);
+
+                i.putExtra("courseTitleCopy", getIntent().getStringExtra("courseTitle"));
+                Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("courseTitle"));
+                i.putExtra("courseStartCopy", getIntent().getStringExtra("courseStart"));
+                Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("courseStart"));
+                i.putExtra("courseEndCopy", getIntent().getStringExtra("courseEnd"));
+                Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("courseEnd"));
+
+                PendingIntent sender = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                    sender = PendingIntent.getBroadcast(ViewAssessmentActivity.this, MainActivity.numAlert++, i, PendingIntent.FLAG_MUTABLE);
+                }
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                // INTERVAL IS 24 HOURS.
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 24 * 60 * 60000, sender);
+
                 return true;
 
             case R.id.action_one_assessments:

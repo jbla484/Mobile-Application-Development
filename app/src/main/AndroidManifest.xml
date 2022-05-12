@@ -14,7 +14,12 @@
         android:theme="@style/AppDark">
 
         <receiver
-            android:name=".MyReceiver"
+            android:name=".MyReceiverCourses"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name=".MyReceiverAssessments"
             android:enabled="true"
             android:exported="true" />
 

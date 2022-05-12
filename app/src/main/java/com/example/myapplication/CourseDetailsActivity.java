@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
@@ -27,7 +26,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 
 public class CourseDetailsActivity extends AppCompatActivity {
@@ -437,11 +435,11 @@ public class CourseDetailsActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_zero_courses:
-                //DELETE COURSE ACTIVITY
+                // SET ALERTS
                 Log.i(TAG, "onOptionsItemSelected: ");
                 Toast.makeText(getApplicationContext(), "Course Alerts Set", Toast.LENGTH_SHORT).show();
 
-                Intent i = new Intent(CourseDetailsActivity.this, MyReceiver.class);
+                Intent i = new Intent(CourseDetailsActivity.this, MyReceiverCourses.class);
 
                 i.putExtra("courseTitleCopy", getIntent().getStringExtra("courseTitleCopy"));
                 Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("courseTitleCopy"));
@@ -452,11 +450,11 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
                 PendingIntent sender = null;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-                    sender = PendingIntent.getBroadcast(CourseDetailsActivity.this, MainActivity.numAlert++, i, PendingIntent.FLAG_IMMUTABLE);
+                    sender = PendingIntent.getBroadcast(CourseDetailsActivity.this, MainActivity.numAlert++, i, PendingIntent.FLAG_MUTABLE);
                 }
                 AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                // INTERVAL IS 60000 TO SHOW EVALUATOR THAT NOTIFICATIONS WORK.
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 60000, sender);
+                // INTERVAL IS 24 HOURS.
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 24 * 60 * 60000, sender);
 
                 return true;
 
