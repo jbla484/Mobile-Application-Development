@@ -80,8 +80,8 @@ public class EditAssessmentActivity extends AppCompatActivity {
 
             String assessmentProgressString = spinner.getSelectedItem().toString();
 
-            String course_id = getIntent().getStringExtra("assessmentId");
-            new EditAssessment().execute(course_id, assessmentTitleString, assessmentStartString, assessmentEndString, assessmentProgressString);
+            int course_id = getIntent().getIntExtra("assessmentId", 0);
+            new EditAssessment().execute(String.valueOf(course_id), assessmentTitleString, assessmentStartString, assessmentEndString, assessmentProgressString);
             Log.i(TAG, "onClick: Assessment added to database. Term ID: ");
 
             Intent intent = new Intent(EditAssessmentActivity.this, ViewAssessmentActivity.class);
@@ -103,7 +103,7 @@ public class EditAssessmentActivity extends AppCompatActivity {
             intent.putExtra("courseEnd", getIntent().getStringExtra("courseEnd"));
             intent.putExtra("courseType", getIntent().getStringExtra("courseType"));
 
-            intent.putExtra("assessmentId", getIntent().getStringExtra("assessmentId"));
+            intent.putExtra("assessmentId", getIntent().getIntExtra("assessmentId", 0));
             intent.putExtra("assessmentMonthValue", getIntent().getStringExtra("assessmentMonthValue"));
             intent.putExtra("assessmentTitle", getIntent().getStringExtra("assessmentTitle"));
             intent.putExtra("assessmentStart", getIntent().getStringExtra("assessmentStart"));

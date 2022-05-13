@@ -67,7 +67,7 @@ public class ViewAssessmentActivity extends AppCompatActivity {
             case android.R.id.home:
                 //BACK BUTTON
                 StudentDatabase sdb2 = new StudentDatabase(getApplicationContext());
-                Cursor c2 = sdb2.getAssessments(Integer.parseInt(getIntent().getStringExtra("courseId")));
+                Cursor c2 = sdb2.getAssessments(getIntent().getIntExtra("assessmentId", 0));
 
                 if (c2.moveToNext()) {
                     Intent intent = new Intent(ViewAssessmentActivity.this, CourseDetailsActivity.class);
@@ -117,7 +117,7 @@ public class ViewAssessmentActivity extends AppCompatActivity {
 
                 Log.i(TAG, "onOptionsItemSelected:");
                 StudentDatabase sdb1 = new StudentDatabase(getApplicationContext());
-                Cursor c1 = sdb1.getAssessments(Integer.parseInt(getIntent().getStringExtra("courseId")));
+                Cursor c1 = sdb1.getAssessments(getIntent().getIntExtra("assessmentId", 0));
 
                 if (c1.moveToNext()) {
                     Intent intent = new Intent(ViewAssessmentActivity.this, EditAssessmentActivity.class);
@@ -140,7 +140,7 @@ public class ViewAssessmentActivity extends AppCompatActivity {
                     intent.putExtra("courseEnd", getIntent().getStringExtra("courseEnd"));
                     intent.putExtra("courseType", getIntent().getStringExtra("courseType"));
 
-                    intent.putExtra("assessmentId", getIntent().getStringExtra("assessmentId"));
+                    intent.putExtra("assessmentId", getIntent().getIntExtra("assessmentId", 0));
                     intent.putExtra("assessmentMonthValue", getIntent().getStringExtra("assessmentMonthValue"));
                     intent.putExtra("assessmentTitle", getIntent().getStringExtra("assessmentTitle"));
                     intent.putExtra("assessmentStart", getIntent().getStringExtra("assessmentStart"));
@@ -153,21 +153,24 @@ public class ViewAssessmentActivity extends AppCompatActivity {
 
             case R.id.action_two_assessments:
                 //DELETE ASSESSMENT ACTIVITY
-                Log.i(TAG, "onOptionsItemSelected: " + getIntent().getIntExtra("courseId", 0));
+                Log.i(TAG, "onOptionsItemSelected: " + getIntent().getIntExtra("assessmentId", 0));
 
-                new DeleteAssessment().execute(Integer.parseInt(getIntent().getStringExtra("courseId")));
+                new DeleteAssessment().execute(getIntent().getIntExtra("assessmentId", 0));
                 Intent intent = new Intent(ViewAssessmentActivity.this, CourseDetailsActivity.class);
-                intent.putExtra("monthValue", getIntent().getStringExtra("monthValue"));
+                // TERM VALUES
+                intent.putExtra("termMonthValue", getIntent().getStringExtra("termMonthValue"));
+                intent.putExtra("termName", getIntent().getStringExtra("termName"));
+                intent.putExtra("termStart", getIntent().getStringExtra("termStart"));
+                intent.putExtra("termEnd", getIntent().getStringExtra("termEnd"));
                 intent.putExtra("termNameAndDate", getIntent().getStringExtra("termNameAndDate"));
                 intent.putExtra("termId", getIntent().getStringExtra("termId"));
-                intent.putExtra("optionalNotes", getIntent().getStringExtra("optionalNotes"));
 
-                intent.putExtra("monthValueTerm", getIntent().getStringExtra("monthValueTerm"));
-                intent.putExtra("termNameTerm", getIntent().getStringExtra("termNameTerm"));
-                intent.putExtra("termStartTerm", getIntent().getStringExtra("termStartTerm"));
-                intent.putExtra("termEndTerm", getIntent().getStringExtra("termEndTerm"));
-                intent.putExtra("termNameAndDateTerm", getIntent().getStringExtra("termNameAndDateTerm"));
-                intent.putExtra("termIdTerm", getIntent().getStringExtra("termIdTerm"));
+                // COURSE VALUES
+                intent.putExtra("courseMonthValue", getIntent().getStringExtra("courseMonthValue"));
+                intent.putExtra("courseNameAndDate", getIntent().getStringExtra("courseNameAndDate"));
+                intent.putExtra("courseId", getIntent().getStringExtra("courseId"));
+                intent.putExtra("courseOptionalNotes", getIntent().getStringExtra("courseOptionalNotes"));
+
                 startActivity(intent);
                 return true;
 
