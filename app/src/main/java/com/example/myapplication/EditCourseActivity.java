@@ -101,7 +101,7 @@ public class EditCourseActivity extends AppCompatActivity {
 
             String courseOptionalNoteString = edit5.getText().toString();
 
-            new EditCourse().execute(getIntent().getStringExtra("termId"), courseTitleString, courseStartString, courseEndString, courseProgressString, courseInstructorNameString, courseInstructorPhoneString, courseInstructorEmailString, courseOptionalNoteString);
+            new EditCourse().execute(getIntent().getStringExtra("courseId"), courseTitleString, courseStartString, courseEndString, courseProgressString, courseInstructorNameString, courseInstructorPhoneString, courseInstructorEmailString, courseOptionalNoteString);
             Log.i(TAG, "onClick: Course added to database. Term ID: " + DashboardActivity.term_id);
             onBackPressed();
             //startActivity(new Intent(EditCourseActivity.this, DashboardActivity.class));

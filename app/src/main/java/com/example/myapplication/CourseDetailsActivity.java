@@ -483,7 +483,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
                 if (c1.moveToNext()) {
                     Intent intent = new Intent(CourseDetailsActivity.this, EditCourseActivity.class);
-                    intent.putExtra("termId", getIntent().getStringExtra("termId"));
+                    intent.putExtra("courseId", getIntent().getStringExtra("courseId"));
                     intent.putExtra("termName", c1.getString(1));
                     intent.putExtra("termStart", c1.getString(2));
                     intent.putExtra("termEnd", c1.getString(3));
