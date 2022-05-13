@@ -131,10 +131,11 @@ public class EditCourseActivity extends AppCompatActivity {
             dateButton.setText(date);
         };
 
-        Calendar calender = Calendar.getInstance();
-        int year = calender.get(Calendar.YEAR);
-        int month = calender.get(Calendar.MONTH);
-        int day = calender.get(Calendar.DAY_OF_MONTH);
+        String[] split = getIntent().getStringExtra("termStart").split(" ");
+
+        int year = Integer.parseInt(split[2]);
+        int month = getMonthNumber(split[0]);
+        int day = Integer.parseInt(split[1]);
 
         int style = AlertDialog.THEME_HOLO_LIGHT;
 
@@ -146,15 +147,56 @@ public class EditCourseActivity extends AppCompatActivity {
             dateButton2.setText(date);
         };
 
-        Calendar calender2 = Calendar.getInstance();
-        int year2 = calender2.get(Calendar.YEAR);
-        int month2 = calender2.get(Calendar.MONTH);
-        int day2 = calender2.get(Calendar.DAY_OF_MONTH);
+        String[] split2 = getIntent().getStringExtra("termEnd").split(" ");
+
+        int year2 = Integer.parseInt(split2[2]);
+        int month2 = getMonthNumber(split2[0]);
+        int day2 = Integer.parseInt(split2[1]);
 
         int style2 = AlertDialog.THEME_HOLO_LIGHT;
 
         datePickerDialog2 = new DatePickerDialog(this, style2, dateSetListener2, year2, month2, day2);
 
+    }
+
+    private int getMonthNumber(String month) {
+        if (month.equals("JAN")) {
+            return 0;
+        }
+        if (month.equals("FEB")) {
+            return 1;
+        }
+        if (month.equals("MAR")) {
+            return 2;
+        }
+        if (month.equals("APR")) {
+            return 3;
+        }
+        if (month.equals("MAY")) {
+            return 4;
+        }
+        if (month.equals("JUN")) {
+            return 5;
+        }
+        if (month.equals("JUL")) {
+            return 6;
+        }
+        if (month.equals("AUG")) {
+            return 7;
+        }
+        if (month.equals("SEP")) {
+            return 8;
+        }
+        if (month.equals("OCT")) {
+            return 9;
+        }
+        if (month.equals("NOV")) {
+            return 10;
+        }
+        if (month.equals("DEC")) {
+            return 11;
+        }
+        return 0;
     }
 
     private String makeDateString(int day, int month, int year) {
