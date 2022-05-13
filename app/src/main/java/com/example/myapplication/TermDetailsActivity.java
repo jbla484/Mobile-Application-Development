@@ -28,7 +28,7 @@ import java.util.Date;
 public class TermDetailsActivity extends AppCompatActivity {
 
     private static final String TAG = "DEBUG";
-    private int termId = 0;
+    private static int termId = 0;
     private GestureDetectorCompat mDetector;
 
     @Override
@@ -40,12 +40,12 @@ public class TermDetailsActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.floatingActionButton2);
         fab.setOnClickListener(view -> {
             Intent intent = new Intent(TermDetailsActivity.this,AddCourseActivity.class);
-            intent.putExtra("monthValueTerm", getIntent().getStringExtra("monthValue"));
-            intent.putExtra("termNameTerm", getIntent().getStringExtra("termName"));
-            intent.putExtra("termStartTerm", getIntent().getStringExtra("termStart"));
-            intent.putExtra("termEndTerm", getIntent().getStringExtra("termEnd"));
-            intent.putExtra("termNameAndDateTerm", getIntent().getStringExtra("termNameAndDate"));
-            intent.putExtra("termIdTerm", getIntent().getStringExtra("termId"));
+            intent.putExtra("termMonthValue", getIntent().getStringExtra("termMonthValue"));
+            intent.putExtra("termName", getIntent().getStringExtra("termName"));
+            intent.putExtra("termStart", getIntent().getStringExtra("termStart"));
+            intent.putExtra("termEnd", getIntent().getStringExtra("termEnd"));
+            intent.putExtra("termNameAndDate", getIntent().getStringExtra("termNameAndDate"));
+            intent.putExtra("termId", getIntent().getStringExtra("termId"));
             startActivity(intent);
         });
 
@@ -61,7 +61,7 @@ public class TermDetailsActivity extends AppCompatActivity {
         }
 
         //Populate remaining weeks
-        String weeks = getIntent().getStringExtra("monthValue");
+        String weeks = getIntent().getStringExtra("termMonthValue");
         TextView textView = findViewById(R.id.remainingWeeksValue);
         textView.setText(weeks);
         TextView textViewTitle = findViewById(R.id.termView);
@@ -289,8 +289,8 @@ public class TermDetailsActivity extends AppCompatActivity {
         btn8.setVisibility(View.INVISIBLE);
         btn9.setVisibility(View.INVISIBLE);
 
-        assert c != null;
-        if (c.getCount() >= -1) {
+        //assert c != null;
+        if (c != null) {
             int i = 0;
             while (c.moveToNext()) {
                 switch (i) {
@@ -355,7 +355,7 @@ public class TermDetailsActivity extends AppCompatActivity {
         return super.onTouchEvent(event);
     }
 
-    public void findRemainingWeeks(String termTitle, String startDate, String endDate, Intent intent, int term_id, String optionalNotes) {
+    public void findRemainingWeeks(String termTitle, String startDate, String endDate, Intent intent, int course_id, String optionalNotes) {
         String[] parseStart = startDate.split(" ");
         int monthIndexStart = 0;
 
@@ -451,17 +451,19 @@ public class TermDetailsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        intent.putExtra("monthValueTerm", getIntent().getStringExtra("monthValue"));
-        intent.putExtra("termNameTerm", getIntent().getStringExtra("termName"));
-        intent.putExtra("termStartTerm", getIntent().getStringExtra("termStart"));
-        intent.putExtra("termEndTerm", getIntent().getStringExtra("termEnd"));
-        intent.putExtra("termNameAndDateTerm", getIntent().getStringExtra("termNameAndDate"));
-        intent.putExtra("termIdTerm", getIntent().getStringExtra("termId"));
+        // TERM VALUES
+        intent.putExtra("termMonthValue", getIntent().getStringExtra("termMonthValue"));
+        intent.putExtra("termName", getIntent().getStringExtra("termName"));
+        intent.putExtra("termStart", getIntent().getStringExtra("termStart"));
+        intent.putExtra("termEnd", getIntent().getStringExtra("termEnd"));
+        intent.putExtra("termNameAndDate", getIntent().getStringExtra("termNameAndDate"));
+        intent.putExtra("termId", getIntent().getStringExtra("termId"));
 
-        intent.putExtra("monthValue", String.valueOf(numOfWeeks));
-        intent.putExtra("termNameAndDate", termTitle + "\n" + startDate + " - \n" + endDate);
-        intent.putExtra("termId", String.valueOf(term_id));
-        intent.putExtra("optionalNotes", optionalNotes);
+        // COURSE VALUES
+        intent.putExtra("courseMonthValue", String.valueOf(numOfWeeks));
+        intent.putExtra("courseNameAndDate", termTitle + "\n" + startDate + " - \n" + endDate);
+        intent.putExtra("courseId", String.valueOf(course_id));
+        intent.putExtra("courseOptionalNotes", optionalNotes);
 
         //TEST
         intent.putExtra("courseStartCopy", startDate);
@@ -527,17 +529,12 @@ public class TermDetailsActivity extends AppCompatActivity {
                 if (c1.moveToNext()) {
                     Intent intent = new Intent(TermDetailsActivity.this, EditTermActivity.class);
 
-                    intent.putExtra("monthValueTerm", getIntent().getStringExtra("monthValue"));
-                    intent.putExtra("termNameTerm", getIntent().getStringExtra("termName"));
-                    intent.putExtra("termStartTerm", getIntent().getStringExtra("termStart"));
-                    intent.putExtra("termEndTerm", getIntent().getStringExtra("termEnd"));
-                    intent.putExtra("termNameAndDateTerm", getIntent().getStringExtra("termNameAndDate"));
-                    intent.putExtra("termIdTerm", getIntent().getStringExtra("termId"));
-
-                    intent.putExtra("termId", getIntent().getStringExtra("termId"));
+                    intent.putExtra("termMonthValue", getIntent().getStringExtra("termMonthValue"));
                     intent.putExtra("termName", getIntent().getStringExtra("termName"));
                     intent.putExtra("termStart", getIntent().getStringExtra("termStart"));
                     intent.putExtra("termEnd", getIntent().getStringExtra("termEnd"));
+                    intent.putExtra("termNameAndDate", getIntent().getStringExtra("termNameAndDate"));
+                    intent.putExtra("termId", getIntent().getStringExtra("termId"));
                     startActivity(intent);
                 }
 

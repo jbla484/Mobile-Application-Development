@@ -7,9 +7,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 
@@ -110,9 +108,19 @@ public class MyReceiverCourses extends BroadcastReceiver {
             // Set notification if there is an upcoming course.
             String body = title + " is starting within the next 7 days.";
 
+            Intent openIntent = new Intent(context, CourseDetailsActivity.class);
+
+            openIntent.putExtra("monthValue", intent.getStringExtra("monthValue"));
+            openIntent.putExtra("termNameAndDate", intent.getStringExtra("termNameAndDate"));
+            openIntent.putExtra("termId", intent.getStringExtra("termId"));
+            openIntent.putExtra("optionalNotes", intent.getStringExtra("optionalNotes"));
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, MainActivity.numAlert++, openIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, channel_id);
             Notification notification = notificationBuilder.setOngoing(false)
                     .setSmallIcon(R.drawable.ic_launcher_foreground)
+                    .setContentIntent(pendingIntent)
                     .setContentTitle("Upcoming Course")
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                     .setContentText(body)
@@ -129,9 +137,28 @@ public class MyReceiverCourses extends BroadcastReceiver {
             // Set notification if there is an upcoming course.
             String body = title + " is ending within the next 7 days.";
 
+            Intent openIntent = new Intent(context, CourseDetailsActivity.class);
+
+            // TERM VALUES
+            openIntent.putExtra("monthValue", intent.getStringExtra("monthValueTerm"));
+            openIntent.putExtra("termName", intent.getStringExtra("termNameTerm"));
+            openIntent.putExtra("termStart", intent.getStringExtra("termStartTerm"));
+            openIntent.putExtra("termEnd", intent.getStringExtra("termEndTerm"));
+            openIntent.putExtra("termNameAndDate", intent.getStringExtra("termNameAndDateTerm"));
+            openIntent.putExtra("termId", intent.getStringExtra("termIdTerm"));
+
+            // COURSE VALUES
+            openIntent.putExtra("monthValue", intent.getStringExtra("monthValue"));
+            openIntent.putExtra("termNameAndDate", intent.getStringExtra("termNameAndDate"));
+            openIntent.putExtra("termId", intent.getStringExtra("termId"));
+            openIntent.putExtra("optionalNotes", intent.getStringExtra("optionalNotes"));
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, MainActivity.numAlert++, openIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, channel_id);
             Notification notification = notificationBuilder.setOngoing(false)
                     .setSmallIcon(R.drawable.ic_launcher_foreground)
+                    .setContentIntent(pendingIntent)
                     .setContentTitle("Course Ending Soon")
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                     .setContentText(body)

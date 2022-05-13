@@ -405,7 +405,7 @@ public class DashboardActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        intent.putExtra("monthValue", String.valueOf(numOfWeeks));
+        intent.putExtra("termMonthValue", String.valueOf(numOfWeeks));
         intent.putExtra("termName", termTitle);
         intent.putExtra("termStart", startDate);
         intent.putExtra("termEnd", endDate);

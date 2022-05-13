@@ -85,13 +85,13 @@ public class AddCourseActivity extends AppCompatActivity {
 
             Log.i(TAG, "onClick: Course added to database. Term ID: " + DashboardActivity.term_id);
             Intent intent = new Intent(AddCourseActivity.this, TermDetailsActivity.class);
-            intent.putExtra("monthValue", getIntent().getStringExtra("monthValueTerm"));
-            intent.putExtra("termName", getIntent().getStringExtra("termNameTerm"));
-            intent.putExtra("termStart", getIntent().getStringExtra("termStartTerm"));
-            intent.putExtra("termEnd", getIntent().getStringExtra("termEndTerm"));
-            intent.putExtra("termNameAndDate", getIntent().getStringExtra("termNameAndDateTerm"));
-            intent.putExtra("termId", getIntent().getStringExtra("termIdTerm"));
-            Log.d(TAG, "onCreate: " + getIntent().getStringExtra("termIdTerm"));
+            intent.putExtra("monthValue", getIntent().getStringExtra("monthValue"));
+            intent.putExtra("termName", getIntent().getStringExtra("termName"));
+            intent.putExtra("termStart", getIntent().getStringExtra("termStart"));
+            intent.putExtra("termEnd", getIntent().getStringExtra("termEnd"));
+            intent.putExtra("termNameAndDate", getIntent().getStringExtra("termNameAndDate"));
+            intent.putExtra("termId", getIntent().getStringExtra("termId"));
+            Log.d(TAG, "onCreate: term id " + getIntent().getStringExtra("termId"));
             onBackPressed();
             startActivity(intent);
         });

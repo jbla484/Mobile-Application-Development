@@ -68,12 +68,12 @@ public class EditTermActivity extends AppCompatActivity {
             Log.i(TAG, "onClick: Added to database");
 
             Intent intent = new Intent(EditTermActivity.this, TermDetailsActivity.class);
-            intent.putExtra("monthValue", getIntent().getStringExtra("monthValueTerm"));
-            intent.putExtra("termName", getIntent().getStringExtra("termNameTerm"));
-            intent.putExtra("termStart", getIntent().getStringExtra("termStartTerm"));
-            intent.putExtra("termEnd", getIntent().getStringExtra("termEndTerm"));
-            intent.putExtra("termNameAndDate", getIntent().getStringExtra("termNameAndDateTerm"));
-            intent.putExtra("termId", getIntent().getStringExtra("termIdTerm"));
+            intent.putExtra("termMonthValue", getIntent().getStringExtra("termMonthValue"));
+            intent.putExtra("termName", getIntent().getStringExtra("termName"));
+            intent.putExtra("termStart", getIntent().getStringExtra("termStart"));
+            intent.putExtra("termEnd", getIntent().getStringExtra("termEnd"));
+            intent.putExtra("termNameAndDate", getIntent().getStringExtra("termNameAndDate"));
+            intent.putExtra("termId", getIntent().getStringExtra("termId"));
             startActivity(intent);
         });
 
