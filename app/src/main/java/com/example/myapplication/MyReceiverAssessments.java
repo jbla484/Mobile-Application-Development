@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -28,9 +29,9 @@ public class MyReceiverAssessments extends BroadcastReceiver {
         boolean startFound = false;
         boolean endFound = false;
 
-        String title = intent.getStringExtra("courseTitleCopy");
-        String start = intent.getStringExtra("courseStartCopy");
-        String end = intent.getStringExtra("courseEndCopy");
+        String title = intent.getStringExtra("assessmentTitleCopy");
+        String start = intent.getStringExtra("assessmentStartCopy");
+        String end = intent.getStringExtra("assessmentEndCopy");
 
         Log.i(TAG, "onPostExecute: Assessment title: " + title);
         Log.i(TAG, "onPostExecute: Assessment start: " + start);
@@ -107,9 +108,28 @@ public class MyReceiverAssessments extends BroadcastReceiver {
             // Set notification if there is an upcoming course.
             String body = title + " is starting within the next 7 days.";
 
+            Intent openIntent = new Intent(context, ViewAssessmentActivity.class);
+
+            // TERM VALUES
+            openIntent.putExtra("termMonthValue", intent.getStringExtra("termMonthValue"));
+            openIntent.putExtra("termName", intent.getStringExtra("termName"));
+            openIntent.putExtra("termStart", intent.getStringExtra("termStart"));
+            openIntent.putExtra("termEnd", intent.getStringExtra("termEnd"));
+            openIntent.putExtra("termNameAndDate", intent.getStringExtra("termNameAndDate"));
+            openIntent.putExtra("termId", intent.getStringExtra("termId"));
+
+            // COURSE VALUES
+            openIntent.putExtra("courseMonthValue", intent.getStringExtra("courseMonthValue"));
+            openIntent.putExtra("courseNameAndDate", intent.getStringExtra("courseNameAndDate"));
+            openIntent.putExtra("courseId", intent.getStringExtra("courseId"));
+            openIntent.putExtra("courseOptionalNotes", intent.getStringExtra("courseOptionalNotes"));
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, MainActivity.numAlert++, openIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, channel_id);
             Notification notification = notificationBuilder.setOngoing(false)
                     .setSmallIcon(R.drawable.ic_launcher_foreground)
+                    .setContentIntent(pendingIntent)
                     .setContentTitle("Upcoming Assessment")
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                     .setContentText(body)
@@ -126,9 +146,28 @@ public class MyReceiverAssessments extends BroadcastReceiver {
             // Set notification if there is an upcoming course.
             String body = title + " is ending within the next 7 days.";
 
+            Intent openIntent = new Intent(context, ViewAssessmentActivity.class);
+
+            // TERM VALUES
+            openIntent.putExtra("termMonthValue", intent.getStringExtra("termMonthValue"));
+            openIntent.putExtra("termName", intent.getStringExtra("termName"));
+            openIntent.putExtra("termStart", intent.getStringExtra("termStart"));
+            openIntent.putExtra("termEnd", intent.getStringExtra("termEnd"));
+            openIntent.putExtra("termNameAndDate", intent.getStringExtra("termNameAndDate"));
+            openIntent.putExtra("termId", intent.getStringExtra("termId"));
+
+            // COURSE VALUES
+            openIntent.putExtra("courseMonthValue", intent.getStringExtra("courseMonthValue"));
+            openIntent.putExtra("courseNameAndDate", intent.getStringExtra("courseNameAndDate"));
+            openIntent.putExtra("courseId", intent.getStringExtra("courseId"));
+            openIntent.putExtra("courseOptionalNotes", intent.getStringExtra("courseOptionalNotes"));
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, MainActivity.numAlert++, openIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, channel_id);
             Notification notification = notificationBuilder.setOngoing(false)
                     .setSmallIcon(R.drawable.ic_launcher_foreground)
+                    .setContentIntent(pendingIntent)
                     .setContentTitle("Assessment Ending Soon")
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                     .setContentText(body)

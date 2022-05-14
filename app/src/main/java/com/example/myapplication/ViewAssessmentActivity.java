@@ -94,17 +94,40 @@ public class ViewAssessmentActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Assessment Alerts Set", Toast.LENGTH_SHORT).show();
 
                 Intent i = new Intent(ViewAssessmentActivity.this, MyReceiverAssessments.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-                i.putExtra("courseTitleCopy", getIntent().getStringExtra("courseTitle"));
-                Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("courseTitle"));
-                i.putExtra("courseStartCopy", getIntent().getStringExtra("courseStart"));
-                Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("courseStart"));
-                i.putExtra("courseEndCopy", getIntent().getStringExtra("courseEnd"));
-                Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("courseEnd"));
+                //FIXME WRONG EXTRAS IN INTENT???
+
+                i.putExtra("termMonthValue", getIntent().getStringExtra("termMonthValue"));
+                i.putExtra("termName", getIntent().getStringExtra("termName"));
+                i.putExtra("termStart", getIntent().getStringExtra("termStart"));
+                i.putExtra("termEnd", getIntent().getStringExtra("termEnd"));
+                i.putExtra("termNameAndDate", getIntent().getStringExtra("termNameAndDate"));
+                i.putExtra("termId", getIntent().getStringExtra("termId"));
+
+                i.putExtra("courseMonthValue", getIntent().getStringExtra("courseMonthValue"));
+                i.putExtra("courseNameAndDate", getIntent().getStringExtra("courseNameAndDate"));
+                i.putExtra("courseId", getIntent().getStringExtra("courseId"));
+                i.putExtra("courseOptionalNotes", getIntent().getStringExtra("courseOptionalNotes"));
+
+                i.putExtra("assessmentMonthValue", getIntent().getStringExtra("assessmentMonthValue"));
+                i.putExtra("assessmentId", getIntent().getIntExtra("assessmentId", 0));
+                i.putExtra("assessmentTitle", getIntent().getStringExtra("assessmentTitle"));
+                i.putExtra("assessmentStart", getIntent().getStringExtra("assessmentStart"));
+                i.putExtra("assessmentEnd", getIntent().getStringExtra("assessmentEnd"));
+                i.putExtra("assessmentType", getIntent().getStringExtra("assessmentType"));
+
+                // TEST
+                i.putExtra("assessmentTitleCopy", getIntent().getStringExtra("assessmentTitle"));
+                Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("assessmentTitle"));
+                i.putExtra("assessmentStartCopy", getIntent().getStringExtra("assessmentStart"));
+                Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("assessmentStart"));
+                i.putExtra("assessmentEndCopy", getIntent().getStringExtra("assessmentEnd"));
+                Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("assessmentEnd"));
 
                 PendingIntent sender = null;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-                    sender = PendingIntent.getBroadcast(ViewAssessmentActivity.this, MainActivity.numAlert++, i, PendingIntent.FLAG_MUTABLE);
+                    sender = PendingIntent.getBroadcast(ViewAssessmentActivity.this, MainActivity.numAlert++, i, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
                 }
                 AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 // INTERVAL IS 24 HOURS.
