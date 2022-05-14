@@ -21,6 +21,7 @@ public class MyReceiverCourses extends BroadcastReceiver {
     String channel_id = "test";
     static int notification_id;
     private static final String TAG = "DEBUG";
+    public static boolean created = false;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -226,13 +227,16 @@ public class MyReceiverCourses extends BroadcastReceiver {
     }
 
     private void createNotificationChannel(Context context,String CHANNEL_ID) {
-        CharSequence name = context.getResources().getString(R.string.channel_name);
-        String description = context.getString(R.string.channel_description);
-        int importance = NotificationManager.IMPORTANCE_DEFAULT;
-        NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-        channel.setDescription(description);
+        created = true;
+        if (!MyReceiverAssessments.created) {
+            CharSequence name = context.getResources().getString(R.string.channel_name);
+            String description = context.getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
 
-        NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
-        notificationManager.createNotificationChannel(channel);
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }
