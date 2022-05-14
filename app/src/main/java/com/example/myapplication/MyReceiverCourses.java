@@ -110,10 +110,19 @@ public class MyReceiverCourses extends BroadcastReceiver {
 
             Intent openIntent = new Intent(context, CourseDetailsActivity.class);
 
-            openIntent.putExtra("monthValue", intent.getStringExtra("monthValue"));
+            // TERM VALUES
+            openIntent.putExtra("termMonthValue", intent.getStringExtra("termMonthValue"));
+            openIntent.putExtra("termName", intent.getStringExtra("termName"));
+            openIntent.putExtra("termStart", intent.getStringExtra("termStart"));
+            openIntent.putExtra("termEnd", intent.getStringExtra("termEnd"));
             openIntent.putExtra("termNameAndDate", intent.getStringExtra("termNameAndDate"));
             openIntent.putExtra("termId", intent.getStringExtra("termId"));
-            openIntent.putExtra("optionalNotes", intent.getStringExtra("optionalNotes"));
+
+            // COURSE VALUES
+            openIntent.putExtra("courseMonthValue", intent.getStringExtra("courseMonthValue"));
+            openIntent.putExtra("courseNameAndDate", intent.getStringExtra("courseNameAndDate"));
+            openIntent.putExtra("courseId", intent.getStringExtra("courseId"));
+            openIntent.putExtra("courseOptionalNotes", intent.getStringExtra("courseOptionalNotes"));
 
             PendingIntent pendingIntent = PendingIntent.getActivity(context, MainActivity.numAlert++, openIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -140,18 +149,18 @@ public class MyReceiverCourses extends BroadcastReceiver {
             Intent openIntent = new Intent(context, CourseDetailsActivity.class);
 
             // TERM VALUES
-            openIntent.putExtra("monthValue", intent.getStringExtra("monthValueTerm"));
-            openIntent.putExtra("termName", intent.getStringExtra("termNameTerm"));
-            openIntent.putExtra("termStart", intent.getStringExtra("termStartTerm"));
-            openIntent.putExtra("termEnd", intent.getStringExtra("termEndTerm"));
-            openIntent.putExtra("termNameAndDate", intent.getStringExtra("termNameAndDateTerm"));
-            openIntent.putExtra("termId", intent.getStringExtra("termIdTerm"));
-
-            // COURSE VALUES
-            openIntent.putExtra("monthValue", intent.getStringExtra("monthValue"));
+            openIntent.putExtra("termMonthValue", intent.getStringExtra("termMonthValue"));
+            openIntent.putExtra("termName", intent.getStringExtra("termName"));
+            openIntent.putExtra("termStart", intent.getStringExtra("termStart"));
+            openIntent.putExtra("termEnd", intent.getStringExtra("termEnd"));
             openIntent.putExtra("termNameAndDate", intent.getStringExtra("termNameAndDate"));
             openIntent.putExtra("termId", intent.getStringExtra("termId"));
-            openIntent.putExtra("optionalNotes", intent.getStringExtra("optionalNotes"));
+
+            // COURSE VALUES
+            openIntent.putExtra("courseMonthValue", intent.getStringExtra("courseMonthValue"));
+            openIntent.putExtra("courseNameAndDate", intent.getStringExtra("courseNameAndDate"));
+            openIntent.putExtra("courseId", intent.getStringExtra("courseId"));
+            openIntent.putExtra("courseOptionalNotes", intent.getStringExtra("courseOptionalNotes"));
 
             PendingIntent pendingIntent = PendingIntent.getActivity(context, MainActivity.numAlert++, openIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
