@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class MyReceiverCourses extends BroadcastReceiver {
+
     String channel_id = "test";
     static int notification_id;
     private static final String TAG = "DEBUG";
@@ -135,6 +136,7 @@ public class MyReceiverCourses extends BroadcastReceiver {
                     .setContentTitle("Upcoming Course")
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                     .setContentText(body)
+                    .setChannelId(channel_id)
                     .setPriority(NotificationManager.IMPORTANCE_HIGH)
                     .setCategory(Notification.CATEGORY_SERVICE)
                     .build();
@@ -174,6 +176,7 @@ public class MyReceiverCourses extends BroadcastReceiver {
                     .setContentTitle("Course Ending Soon")
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                     .setContentText(body)
+                    .setChannelId(channel_id)
                     .setPriority(NotificationManager.IMPORTANCE_HIGH)
                     .setCategory(Notification.CATEGORY_SERVICE)
                     .build();
@@ -231,7 +234,7 @@ public class MyReceiverCourses extends BroadcastReceiver {
         if (!MyReceiverAssessments.created) {
             CharSequence name = context.getResources().getString(R.string.channel_name);
             String description = context.getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);
 

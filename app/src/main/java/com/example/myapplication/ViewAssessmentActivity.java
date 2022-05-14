@@ -124,9 +124,8 @@ public class ViewAssessmentActivity extends AppCompatActivity {
                 Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("assessmentEnd"));
 
                 PendingIntent sender = null;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-                    sender = PendingIntent.getBroadcast(ViewAssessmentActivity.this, MainActivity.numAlert++, i, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-                }
+                sender = PendingIntent.getBroadcast(ViewAssessmentActivity.this, MainActivity.numAlert++, i, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+
                 AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 // INTERVAL IS 24 HOURS.
                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 60000, sender);

@@ -2,12 +2,12 @@ package com.example.myapplication;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
-import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -466,12 +466,12 @@ public class CourseDetailsActivity extends AppCompatActivity {
                 Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("courseEndCopy"));
 
                 PendingIntent sender = null;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-                    sender = PendingIntent.getBroadcast(CourseDetailsActivity.this, MainActivity.numAlert++, i, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-                }
+                sender = PendingIntent.getBroadcast(CourseDetailsActivity.this, MainActivity.numAlert++, i, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+
                 AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 // INTERVAL IS 24 HOURS.
                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 60000, sender);
+
 
                 return true;
 
