@@ -22,19 +22,13 @@ public class DashboardActivity extends AppCompatActivity {
     public static int term_id;
 
     @Override
-    protected void onDestroy() {
-
-        super.onDestroy();
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
         Log.d(TAG, "onCreate: ");
 
-        //View terms
+        // FIND TERMS FROM DATABASE AND SHOW THEM.
         StudentDatabase sdb = new StudentDatabase(getApplicationContext());
         Cursor c = sdb.getData();
 
@@ -49,6 +43,7 @@ public class DashboardActivity extends AppCompatActivity {
         Button btn8 = findViewById(R.id.button_ninth);
         Button btn9 = findViewById(R.id.button_tenth);
 
+        // BUTTON CLICK LISTENERS.
         btn0.setOnClickListener(view -> {
 
             StudentDatabase sdb1 = new StudentDatabase(getApplicationContext());
@@ -229,6 +224,7 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
+        // SET BUTTONS INVISIBLE.
         btn0.setVisibility(View.INVISIBLE);
         btn1.setVisibility(View.INVISIBLE);
         btn2.setVisibility(View.INVISIBLE);
@@ -240,6 +236,7 @@ public class DashboardActivity extends AppCompatActivity {
         btn8.setVisibility(View.INVISIBLE);
         btn9.setVisibility(View.INVISIBLE);
 
+        // SHOW BUTTONS IF THERE ARE TERMS IN DATABASE.
         if (c.getCount() >= -1) {
             int i = 0;
             while (c.moveToNext()) {
