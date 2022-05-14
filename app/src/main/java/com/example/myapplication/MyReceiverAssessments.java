@@ -124,12 +124,21 @@ public class MyReceiverAssessments extends BroadcastReceiver {
             openIntent.putExtra("courseId", intent.getStringExtra("courseId"));
             openIntent.putExtra("courseOptionalNotes", intent.getStringExtra("courseOptionalNotes"));
 
+            // ASSESSMENT VALUES
+            openIntent.putExtra("assessmentMonthValue", intent.getStringExtra("assessmentMonthValue"));
+            openIntent.putExtra("assessmentId", intent.getIntExtra("assessmentId", 0));
+            openIntent.putExtra("assessmentTitle", intent.getStringExtra("assessmentTitle"));
+            openIntent.putExtra("assessmentStart", intent.getStringExtra("assessmentStart"));
+            openIntent.putExtra("assessmentEnd", intent.getStringExtra("assessmentEnd"));
+            openIntent.putExtra("assessmentType", intent.getStringExtra("assessmentType"));
+
             PendingIntent pendingIntent = PendingIntent.getActivity(context, MainActivity.numAlert++, openIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, channel_id);
             Notification notification = notificationBuilder.setOngoing(false)
                     .setSmallIcon(R.drawable.ic_launcher_foreground)
                     .setContentIntent(pendingIntent)
+                    .setAutoCancel(true)
                     .setContentTitle("Upcoming Assessment")
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                     .setContentText(body)
@@ -162,12 +171,21 @@ public class MyReceiverAssessments extends BroadcastReceiver {
             openIntent.putExtra("courseId", intent.getStringExtra("courseId"));
             openIntent.putExtra("courseOptionalNotes", intent.getStringExtra("courseOptionalNotes"));
 
+            // ASSESSMENT VALUES
+            openIntent.putExtra("assessmentMonthValue", intent.getStringExtra("assessmentMonthValue"));
+            openIntent.putExtra("assessmentId", intent.getIntExtra("assessmentId", 0));
+            openIntent.putExtra("assessmentTitle", intent.getStringExtra("assessmentTitle"));
+            openIntent.putExtra("assessmentStart", intent.getStringExtra("assessmentStart"));
+            openIntent.putExtra("assessmentEnd", intent.getStringExtra("assessmentEnd"));
+            openIntent.putExtra("assessmentType", intent.getStringExtra("assessmentType"));
+
             PendingIntent pendingIntent = PendingIntent.getActivity(context, MainActivity.numAlert++, openIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, channel_id);
             Notification notification = notificationBuilder.setOngoing(false)
                     .setSmallIcon(R.drawable.ic_launcher_foreground)
                     .setContentIntent(pendingIntent)
+                    .setAutoCancel(true)
                     .setContentTitle("Assessment Ending Soon")
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                     .setContentText(body)

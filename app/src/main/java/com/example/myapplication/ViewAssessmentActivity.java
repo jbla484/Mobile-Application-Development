@@ -96,8 +96,6 @@ public class ViewAssessmentActivity extends AppCompatActivity {
                 Intent i = new Intent(ViewAssessmentActivity.this, MyReceiverAssessments.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-                //FIXME WRONG EXTRAS IN INTENT???
-
                 i.putExtra("termMonthValue", getIntent().getStringExtra("termMonthValue"));
                 i.putExtra("termName", getIntent().getStringExtra("termName"));
                 i.putExtra("termStart", getIntent().getStringExtra("termStart"));
@@ -117,7 +115,7 @@ public class ViewAssessmentActivity extends AppCompatActivity {
                 i.putExtra("assessmentEnd", getIntent().getStringExtra("assessmentEnd"));
                 i.putExtra("assessmentType", getIntent().getStringExtra("assessmentType"));
 
-                // TEST
+                // COPY OF COURSE VALUES
                 i.putExtra("assessmentTitleCopy", getIntent().getStringExtra("assessmentTitle"));
                 Log.i(TAG, "onOptionsItemSelected: " + getIntent().getStringExtra("assessmentTitle"));
                 i.putExtra("assessmentStartCopy", getIntent().getStringExtra("assessmentStart"));
