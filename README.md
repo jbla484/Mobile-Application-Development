@@ -1,2 +1,5 @@
-# Mobile-Application-Development
-Western Governors University Mobile Application Development course final.
+# C196 Mobile Application Development Project Final (Android Studio Application)
+
+Final Project for Western Governors University class "Mobile Application Development"
+
+## Task:
