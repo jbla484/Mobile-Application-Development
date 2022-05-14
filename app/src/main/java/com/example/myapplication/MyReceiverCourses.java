@@ -13,12 +13,14 @@ import androidx.core.app.NotificationCompat;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 public class MyReceiverCourses extends BroadcastReceiver {
 
+    ArrayList<String> allCourseTitles = new ArrayList<>();
     String channel_id = "test";
     static int notification_id;
     private static final String TAG = "DEBUG";
@@ -34,6 +36,8 @@ public class MyReceiverCourses extends BroadcastReceiver {
         String title = intent.getStringExtra("courseTitleCopy");
         String start = intent.getStringExtra("courseStartCopy");
         String end = intent.getStringExtra("courseEndCopy");
+
+        allCourseTitles.add(title);
 
         Log.i(TAG, "onPostExecute: Course title: " + title);
         Log.i(TAG, "onPostExecute: Course start: " + start);
