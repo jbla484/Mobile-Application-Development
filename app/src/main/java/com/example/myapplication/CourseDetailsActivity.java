@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -412,6 +411,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Determine which menu option was chosen
@@ -525,7 +525,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
                 //SHARE COURSE NOTES
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, getIntent().getStringExtra("optionalNotes"));
+                sendIntent.putExtra(Intent.EXTRA_TEXT, getIntent().getStringExtra("courseOptionalNotes"));
                 sendIntent.setType("text/plain");
 
                 Intent shareIntent = Intent.createChooser(sendIntent, null);
