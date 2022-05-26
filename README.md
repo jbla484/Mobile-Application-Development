@@ -143,3 +143,7 @@ Note: Verify that all the required functions of your application are working by 
  
 
 #### H.  Demonstrate professional communication in the content and presentation of your submission.
+
+## Evaluator Comments:
+
+"The submission includes an academic tracker Android application and related documentation. The application features the functionality to create, edit, and delete terms, courses, and assessments. The functionality to share notes and to prevent the user from deleting a term with courses associated was evident. The documentation includes technical details on the project as well as several reflection pieces detailing the development process. Appropriate alerts were observed."
